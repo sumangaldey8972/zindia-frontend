@@ -1,9 +1,10 @@
 import './App.css';
+import LandingPage from './Pages/LandingPage/LandingPage';
 
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to ZINDIA</h1>
+      <LandingPage />
     </div>
   );
 }
