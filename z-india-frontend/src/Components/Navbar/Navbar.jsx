@@ -1,8 +1,37 @@
 import { Box, Stack, Typography } from "@mui/joy";
 import React from 'react';
 import "../../index.css"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+    typography: {
+        h4: {
+            position: 'relative',
+            display: 'inline-block',
+            cursor: 'pointer',
+            fontSize: '1rem',
+            fontWeight: '600',
+            fontFamily: 'Noto Sans',
+            '&::after': {
+                content: '""',
+                position: 'absolute',
+                left: 0,
+                bottom: -2,
+                height: 2,
+                width: '0%',
+                backgroundColor: 'currentColor',
+                transition: 'width 0.3s ease-in-out',
+            },
+            '&:hover::after': {
+                width: '100%',
+            },
+        },
+    },
+});
 
 const Navbar = () => {
+
+    let navItem = ['Home', 'About Us', 'Services', 'Works', 'Testimonials']
 
     return (
         <React.Fragment>
@@ -28,11 +57,22 @@ const Navbar = () => {
                         color: '#00215b',
                     }
                 }}>
-                    <Typography level='h4'>Home</Typography>
-                    <Typography level='h4'>About Us</Typography>
-                    <Typography level='h4'>Services</Typography>
-                    <Typography level='h4'>Works</Typography>
-                    <Typography level='h4'>Testimonials</Typography>
+                    {/* {
+                        navItem.map((el) => (
+                            <Typography level='h4' key={el} sx={{
+                                cursor: 'pointer'
+                            }} >{el}</Typography>
+                        ))
+                    } */}
+
+                    <ThemeProvider theme={theme}>
+                        {navItem.map((el, index) => (
+                            <Typography level="h4" key={index}>
+                                {el}
+                            </Typography>
+                        ))}
+                    </ThemeProvider>
+
                 </Stack>
             </Stack>
         </React.Fragment>

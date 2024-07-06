@@ -1,9 +1,0 @@
-.landing_page_typography {
-    position: 'fixed';
-    top: '15rem';
-    left: '3rem';
-    border: '2px solid red';
-    letter-spacing: '2px';
-    font-size: '3rem';
-    color: 'var(--primary-color)'
-}

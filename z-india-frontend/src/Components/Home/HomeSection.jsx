@@ -3,17 +3,33 @@ import { Box, Button, Stack, Typography } from "@mui/joy";
 import { keyframes } from "@emotion/react";
 import LandingPageImage from "../../Assets/zindia_landing_page_image.jpg";
 import "../../index.css";
+import CountUp from 'react-countup';
+import useIntersectionObserver from "../../Hooks/InterSectionObserver";
+
 
 const fadeIn = keyframes`
-    from {
+    0% {
+        transform : translateX(-100%);
         opacity: 0;
     }
-    to {
+    100% {
         opacity: 1;
     }
 `;
 
+const popIn = keyframes`
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
 const HomeSection = () => {
+
+    const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
+
 
     let homeArr = [
         { image: "https://rayoflightthemes.com/wordpress-themes/dustro-wordpress-theme/wp-content/uploads/2021/03/engineer.svg", heading: "General Contract", subheading: "Comprehensive Construction Solutions for Your Every Building Need." },
@@ -73,15 +89,16 @@ const HomeSection = () => {
                     top: '40rem',
                     right: '10rem',
                 }} >
-                    <Box sx={{
+                    <Box ref={ref} sx={{
                         background: '#00215b',
                         padding: '4rem 2.5rem 4rem',
+                        animation: hasIntersected ? `${popIn} 0.9s ease-out` : 'none',
                     }} >
                         <Typography level="h1" sx={{
                             color: 'white',
                             fontSize: '4.5rem',
                         }} >
-                            59
+                            <CountUp end={59} duration={5} />
                         </Typography>
                         <Typography sx={{
                             color: 'white',
@@ -91,15 +108,16 @@ const HomeSection = () => {
                             Completed Projects
                         </Typography>
                     </Box>
-                    <Box sx={{
+                    <Box ref={ref} sx={{
                         background: '#f45905',
                         padding: '4rem 2.5rem 4rem',
+                        animation: hasIntersected ? `${popIn} 0.9s ease-out` : 'none',
                     }} >
                         <Typography level="h1" sx={{
                             color: 'white',
                             fontSize: '4.5rem',
                         }} >
-                            25+
+                            <CountUp end={25} duration={5} suffix="+" />
                         </Typography>
                         <Typography sx={{
                             color: 'white',
@@ -117,7 +135,8 @@ const HomeSection = () => {
                         paddingRight: '2.5rem',
                         width: '40%',
                         boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                        background: 'white'
+                        background: 'white',
+                        animation: hasIntersected ? `${popIn} 0.9s ease-out` : 'none',
                     }} >
                         <Box sx={{
                             marginBottom: '2rem'
@@ -135,11 +154,18 @@ const HomeSection = () => {
                         <Stack direction="column" spacing={4} >
                             {
                                 homeArr?.map((el) => (
-                                    <Stack key={el.heading} direction="row" spacing={2} >
+                                    <Stack key={el.heading} direction="row" spacing={2} sx={{
+                                        ":hover": {
+                                            backgroundColor: '#e0eaf2'
+                                        },
+                                        padding: '.5rem',
+                                        borderRadius: '12px',
+                                        transition: '.2s ease-in'
+                                    }} >
                                         <Box>
                                             <img src={el.image} alt="" />
                                         </Box>
-                                        <Box>
+                                        <Box  >
                                             <Typography level="title-lg" sx={{
                                                 color: '#00215b',
                                                 fontWeight: '600'
