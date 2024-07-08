@@ -1,18 +1,52 @@
 import { Box, Button, Typography } from "@mui/joy"
 import "./ImageLayout.css"
 import LinkIcon from '@mui/icons-material/Link';
+import useIntersectionObserver from "../../Hooks/InterSectionObserver";
+import { keyframes } from "@emotion/react";
+
+
+const slideUp = keyframes`
+    0% {
+        transform : translateY(100%);
+        opacity: 0;
+    }
+    50%{
+        transform : translateY(50%);
+        opacity: .5;
+    }
+    100% {
+        transform : translateY(0%);
+        opacity: 1;
+    }
+`;
+
+
+const popIn = keyframes`
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
 
 const SpecialProject = () => {
+
+    const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
+
+
     return (
         <>
-            <Box>
+            <Box ref={ref} sx={{
+                animation: hasIntersected ? `${slideUp} .9s ease-out` : 'none'
+            }} >
                 <Typography level="body-sm" sx={{
                     color: '#f45905',
                     textTransform: 'uppercase',
                     fontWeight: '700',
                     textAlign: 'center',
-                    margin: 'auto'
-                }}  >our works</Typography>
+                    margin: 'auto',
+                }}>our works</Typography>
                 <Typography level="h1" sx={{
                     color: '#16213e',
                     textAlign: 'center',

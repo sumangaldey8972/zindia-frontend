@@ -82,7 +82,7 @@ const HomeSection = () => {
                     </Button>
                 </Box>
 
-                <Stack direction="row" sx={{
+                <Stack ref={ref} direction="row" sx={{
                     justifyContent: 'center',
                     alignItems: 'center',
                     position: 'absolute',
@@ -92,7 +92,7 @@ const HomeSection = () => {
                     <Box ref={ref} sx={{
                         background: '#00215b',
                         padding: '4rem 2.5rem 4rem',
-                        animation: hasIntersected ? `${popIn} 0.9s ease-out` : 'none',
+                        animation: hasIntersected ? `${popIn} 0.15s ease-in` : 'none',
                     }} >
                         <Typography level="h1" sx={{
                             color: 'white',
@@ -133,7 +133,7 @@ const HomeSection = () => {
                         paddingLeft: '2.5rem',
                         paddingBottom: '5rem',
                         paddingRight: '2.5rem',
-                        width: '40%',
+                        width: '35%',
                         boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                         background: 'white',
                         animation: hasIntersected ? `${popIn} 0.9s ease-out` : 'none',
@@ -154,7 +154,7 @@ const HomeSection = () => {
                         <Stack direction="column" spacing={4} >
                             {
                                 homeArr?.map((el) => (
-                                    <Stack key={el.heading} direction="row" spacing={2} sx={{
+                                    <Stack key={el.heading} direction="row" alignItems="center" spacing={2} sx={{
                                         ":hover": {
                                             backgroundColor: '#e0eaf2'
                                         },
@@ -162,13 +162,15 @@ const HomeSection = () => {
                                         borderRadius: '12px',
                                         transition: '.2s ease-in'
                                     }} >
-                                        <Box>
-                                            <img src={el.image} alt="" />
+                                        <Box sx={{
+                                            width: '30%'
+                                        }} >
+                                            <img src={el.image} alt="" style={{ width: '100%' }} />
                                         </Box>
                                         <Box  >
                                             <Typography level="title-lg" sx={{
                                                 color: '#00215b',
-                                                fontWeight: '600'
+                                                fontWeight: '700'
                                             }} >{el.heading}</Typography>
                                             <Typography level="body-sm" >{el.subheading}</Typography>
                                         </Box>

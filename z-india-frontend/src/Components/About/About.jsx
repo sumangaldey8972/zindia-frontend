@@ -4,12 +4,41 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import SpecialProject from "../SpecialProjects/SpecialProjects";
 import ContactUs from "../ContactUs/ContactUs";
 import Footer from "../Footer/Footer";
+import { keyframes } from "@emotion/react";
+import useIntersectionObserver from "../../Hooks/InterSectionObserver";
+
+
+const fadeInLeft = keyframes`
+    0% {
+        transform : translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform : translateX(0%);
+        opacity: 1;
+    }
+`;
+
+
+const fadeInRight = keyframes`
+    0% {
+        transform : translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform : translateX(0%);
+        opacity: 1;
+    }
+`;
 
 
 const About = () => {
+    const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
+
+
     return (
         <>
-            <Box sx={{
+            <Box ref={ref} sx={{
                 position: 'absolute',
                 top: '80rem',
                 width: 'full',
@@ -18,12 +47,14 @@ const About = () => {
                 <Stack direction="row" spacing={3} justifyContent="center" alignItems="center" >
                     <Box sx={{
                         width: '35%',
-                        margin: 'auto'
+                        margin: 'auto',
+                        // animation: hasIntersected ? `${fadeInLeft} .9s ease-out` : 'none'
                     }} >
                         <img src="https://rayoflightthemes.com/wordpress-themes/dustro-wordpress-theme/wp-content/uploads/2021/02/Images-1-600x712.jpg" alt="" style={{ width: '100%', }} />
                     </Box>
                     <Box sx={{
                         width: '40%',
+                        animation: hasIntersected ? `${fadeInRight} .9s ease-out` : 'none',
                     }}>
                         <Box>
                             <Typography level="body-sm" sx={{

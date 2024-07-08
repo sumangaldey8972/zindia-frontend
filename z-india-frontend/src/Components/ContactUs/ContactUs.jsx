@@ -62,7 +62,7 @@ const ContactUs = () => {
                                 <InputField placeholder="Phone number (required)" />
                             </Grid>
                             <Grid xs={12}>
-                                <Textarea sx={{
+                                <Textarea minRows={4} maxRows={6} sx={{
                                     fontSize: '.8rem',
                                     borderRadius: '0'
                                 }} size="lg" placeholder="Leave us message" />
@@ -86,14 +86,14 @@ const ContactUs = () => {
                                 typesArr.map((el) => (
                                     <Stack key={el.heading} direction="row" spacing={2} >
                                         <Box sx={{
-                                            width: '15%'
+                                            width: '12%'
                                         }} >
                                             <img src={el.image} alt="" style={{ width: '100%' }} />
                                         </Box>
                                         <Box>
                                             <Typography level="title-lg" sx={{
                                                 color: '#00215b',
-                                                fontWeight: '600'
+                                                fontWeight: '700'
                                             }} >{el.heading}</Typography>
                                             <Typography level="body-sm" >{el.subHeading}</Typography>
                                         </Box>
