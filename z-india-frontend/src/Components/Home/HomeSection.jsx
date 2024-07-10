@@ -98,7 +98,7 @@ const HomeSection = () => {
                             color: 'white',
                             fontSize: '4.5rem',
                         }} >
-                            <CountUp end={59} duration={5} />
+                            <CountUp end={hasIntersected ? 59 : ''} duration={5} />
                         </Typography>
                         <Typography sx={{
                             color: 'white',
@@ -117,7 +117,7 @@ const HomeSection = () => {
                             color: 'white',
                             fontSize: '4.5rem',
                         }} >
-                            <CountUp end={25} duration={5} suffix="+" />
+                            <CountUp end={hasIntersected ? 25 : ''} duration={5} suffix="+" />
                         </Typography>
                         <Typography sx={{
                             color: 'white',
