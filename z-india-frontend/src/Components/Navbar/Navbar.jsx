@@ -44,7 +44,8 @@ const Navbar = () => {
                 width: '100%',
                 zIndex: 1,
                 backdropFilter: 'blur(10px)',
-                borderBottom: '1px solid lightgrey'
+                borderBottom: '1px solid lightgrey',
+                display: { xs: 'none', sm: 'none', md: 'flex' }
             }} >
                 <Box>
                     <Typography level='h1' sx={{

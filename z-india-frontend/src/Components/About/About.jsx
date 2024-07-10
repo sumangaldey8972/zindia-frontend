@@ -42,7 +42,8 @@ const About = () => {
                 position: 'absolute',
                 top: '80rem',
                 width: 'full',
-                margin: 'auto'
+                margin: 'auto',
+                display: { xs: 'none', sm: 'none', md: 'block' }
             }}>
                 <Stack direction="row" spacing={3} justifyContent="center" alignItems="center" >
                     <Box sx={{

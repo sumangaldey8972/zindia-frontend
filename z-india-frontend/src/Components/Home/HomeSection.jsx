@@ -39,7 +39,10 @@ const HomeSection = () => {
 
     return (
         <>
-            <Box sx={{ position: 'relative' }}>
+            <Box sx={{
+                position: 'relative',
+                display: { xs: 'none', sm: 'none', md: 'block' }
+            }}>
                 <img
                     src={LandingPageImage}
                     style={{ width: '100%', display: 'block' }}
