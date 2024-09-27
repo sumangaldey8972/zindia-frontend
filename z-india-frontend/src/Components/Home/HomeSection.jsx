@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Button, Stack, Typography } from "@mui/joy";
 import { keyframes } from "@emotion/react";
 import LandingPageImage from "../../Assets/zindia_landing_page_image.jpg";
+import Main_photo from "../../Assets/Main_photo.jpeg"
 import "../../index.css";
 import CountUp from 'react-countup';
 import useIntersectionObserver from "../../Hooks/InterSectionObserver";
@@ -45,7 +46,7 @@ const HomeSection = () => {
             }}>
                 <img
                     src={LandingPageImage}
-                    style={{ width: '100%', display: 'block' }}
+                    style={{ width: '100%', display: 'block', backgroundSize:'coverr', backgroundPosition:'center'}}
                     alt="Landing Page"
                 />
                 <Box sx={{

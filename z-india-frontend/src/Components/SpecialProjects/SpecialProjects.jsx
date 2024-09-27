@@ -3,6 +3,7 @@ import "./ImageLayout.css"
 import LinkIcon from '@mui/icons-material/Link';
 import useIntersectionObserver from "../../Hooks/InterSectionObserver";
 import { keyframes } from "@emotion/react";
+import PropertyCard from "./PropertiSalesCard";
 
 
 const slideUp = keyframes`
@@ -38,9 +39,37 @@ const SpecialProject = () => {
     return (
         <>
             <Box ref={ref} sx={{
-                animation: hasIntersected ? `${slideUp} .9s ease-out` : 'none'
+                animation: hasIntersected ? `${slideUp} .9s ease-out` : 'none',
+                // border: '1px solid red',
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection:'column'
+
             }} >
-                <Typography level="body-sm" sx={{
+                <Box sx={{
+                    // border: '1px solid green',
+                    textAlign: 'center'
+                }} >
+                    <Typography level="h5" fontWeight="600" sx={{
+                        color:"#f45905"
+                    }}  >Properties</Typography>
+                    <Typography level="h1" fontWeight="400" sx={{
+                        color:'#00215b'
+                    }} >For Sale</Typography>
+                    <Typography level="h6" sx={{
+                        color:'gray'
+                    }} >Check out latest Prpoerties for sale</Typography>
+                </Box>
+
+                <PropertyCard/>
+            </Box>
+        </>
+    )
+}
+
+export default SpecialProject
+
+{/* <Typography level="body-sm" sx={{
                     color: '#f45905',
                     textTransform: 'uppercase',
                     fontWeight: '700',
@@ -166,10 +195,4 @@ const SpecialProject = () => {
                             </Button>
                         </div>
                     </div>
-                </div>
-            </Box>
-        </>
-    )
-}
-
-export default SpecialProject
+                </div> */}
