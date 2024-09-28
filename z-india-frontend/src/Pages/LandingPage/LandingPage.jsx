@@ -2,23 +2,18 @@ import Navbar from "../../Components/Navbar/Navbar";
 import "../../index.css"
 import HomeSection from "../../Components/Home/HomeSection";
 import About from "../../Components/About/About";
-import { Box, Typography } from "@mui/joy";
+import { Box, CssBaseline, Typography } from "@mui/joy";
+import NavbarV2 from "../../Components/Navbar/Navbar-v2";
 
 
 const LandingPage = () => {
     return (
         <>
-            <Navbar />
+            {/* <Navbar /> */}
+            <CssBaseline />
+            <NavbarV2 />
             <HomeSection />
             <About />
-
-            <Box sx={{
-                display: { xs: 'block', sm: 'block', md: 'none' }
-            }} >
-                <Typography level="title-lg" textAlign="center" >
-                    Open this link into your laptop or desktop
-                </Typography>
-            </Box>
         </>
     )
 }

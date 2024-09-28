@@ -31,13 +31,15 @@ const ContactUs = () => {
     return (
         <>
             <Box>
-                <Stack direction="row" spacing={4} sx={{
+                <Stack spacing={4} sx={{
                     width: '80%',
                     margin: '4rem auto',
-                    alignItems: 'center'
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flexDirection: { sm: 'column', md: 'row' }
                 }} >
                     <Box sx={{
-                        width: '50%'
+                        width: { sm: '100%', md: '50%' }
                     }} >
                         <Typography level="title-md" sx={{
                             fontWeight: '700',

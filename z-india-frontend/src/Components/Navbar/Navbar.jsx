@@ -1,7 +1,9 @@
-import { Box, Stack, Typography } from "@mui/joy";
+import { Box, IconButton, Stack, Typography } from "@mui/joy";
 import React from 'react';
 import "../../index.css"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 
 const theme = createTheme({
     typography: {
@@ -42,10 +44,11 @@ const Navbar = () => {
                 top: 0,
                 left: 0,
                 width: '100%',
-                zIndex: 1,
+                zIndex: 9,
                 backdropFilter: 'blur(10px)',
                 borderBottom: '1px solid lightgrey',
-                display: { xs: 'none', sm: 'none', md: 'flex' }
+                // display: { xs: 'none', sm: 'none', md: 'flex' }
+                display: 'flex'
             }} >
                 <Box>
                     <Typography level='h1' sx={{

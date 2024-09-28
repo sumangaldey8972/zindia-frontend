@@ -6,10 +6,12 @@ import EmailIcon from '@mui/icons-material/Email';
 const Footer = () => {
     return (
         <>
-            <Stack direction="row" >
+            <Stack sx={{
+                flexDirection: { sm: 'column', md: 'row' },
+            }} >
                 <Box sx={{
                     paddingTop: '3rem',
-                    width: '40%',
+                    width: { sm: '100%', md: '40%' },
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'flex-end',
@@ -17,11 +19,13 @@ const Footer = () => {
                     backgroundColor: '#f45905',
                     paddingRight: '.6rem'
                 }} >
-                    <Box>
+                    <Box sx={{
+                        padding: '1rem'
+                    }} >
                         <Typography level='h1' sx={{
                             color: 'white'
                         }} >
-                            Z-INDIA
+                            Z-INDIA Realty
                         </Typography>
 
                         <Box>
@@ -45,7 +49,7 @@ const Footer = () => {
                 </Box>
 
                 <Box sx={{
-                    width: '60%',
+                    width: { sm: '100%', md: '60%' },
                     // height: '100px', // set an explicit height to ensure the flexbox behavior works as expected
                     display: 'flex',
                     alignItems: 'flex-end',

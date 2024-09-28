@@ -1,0 +1,19 @@
+/* Slide-in animation for the entire Stack */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Apply the animation to the Stack component */
+.stack-slide-in {
+    animation: slideInFromLeft 1s ease-in-out forwards;
+    opacity: 0;
+    /* Start hidden */
+}
