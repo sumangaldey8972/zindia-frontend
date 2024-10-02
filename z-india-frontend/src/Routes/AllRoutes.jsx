@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import LandingPage from "../Pages/LandingPage/LandingPage"
 import ProjectDetails from "../Pages/ProjectDetails/ProjectDetails"
-import Navbar from "../Components/Navbar/Navbar"
 
 
 const AllRoutes = () => {

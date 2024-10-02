@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/joy";
 import { keyframes } from "@emotion/react";
 import LandingPageImage from "../../Assets/zindia_landing_page_image.jpg";
@@ -6,6 +6,7 @@ import Main_photo from "../../Assets/Main_photo.jpeg"
 import "../../index.css";
 import CountUp from 'react-countup';
 import useIntersectionObserver from "../../Hooks/InterSectionObserver";
+import EnquireModal from "../../Common/Modal/EnquireModal";
 
 
 const fadeIn = keyframes`
@@ -30,6 +31,9 @@ const popIn = keyframes`
 const HomeSection = () => {
 
     const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
+    const [open, setOpen] = useState(false)
+
+
 
 
     let homeArr = [
@@ -85,7 +89,9 @@ const HomeSection = () => {
                         padding: '1.6rem',
                         fontSize: '1.5rem',
                         borderRadius: '0',
-                    }} >
+                    }}
+                        onClick={() => setOpen(true)}
+                    >
                         Enquire Now
                     </Button>
                 </Box>
@@ -107,7 +113,7 @@ const HomeSection = () => {
                             color: 'white',
                             fontSize: '4.5rem',
                         }} >
-                            <CountUp end={hasIntersected ? 59 : ''} duration={5} />
+                            <CountUp end={hasIntersected ? 3 : ''} duration={5} />
                         </Typography>
                         <Typography sx={{
                             color: 'white',
@@ -126,7 +132,7 @@ const HomeSection = () => {
                             color: 'white',
                             fontSize: '4.5rem',
                         }} >
-                            <CountUp end={hasIntersected ? 25 : ''} duration={5} suffix="+" />
+                            <CountUp end={hasIntersected ? 7 : ''} duration={5} suffix="+" />
                         </Typography>
                         <Typography sx={{
                             color: 'white',
@@ -190,7 +196,7 @@ const HomeSection = () => {
                     </Box>
                 </Stack>
             </Box>
-
+            <EnquireModal open={open} setOpen={setOpen} />
         </>
     );
 }

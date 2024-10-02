@@ -3,10 +3,10 @@ import { Box, Button, Stack, Typography } from "@mui/joy"
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import SpecialProject from "../SpecialProjects/SpecialProjects";
 import ContactUs from "../ContactUs/ContactUs";
-import Footer from "../Footer/Footer";
 import { keyframes } from "@emotion/react";
 import useIntersectionObserver from "../../Hooks/InterSectionObserver";
 import { useEffect } from "react";
+import Footer from "../../Common/Footer/Footer";
 
 
 const fadeInLeft = keyframes`
@@ -40,7 +40,7 @@ const About = () => {
         <>
             <Box ref={ref} sx={{
                 position: 'absolute',
-                top: { xs: '95rem', md: '80rem' },
+                top: { xs: '95rem', md: '90rem' },
                 width: { sm: '100%', md: 'full' },
                 margin: 'auto',
                 // display: { xs: 'none', sm: 'none', md: 'block' }

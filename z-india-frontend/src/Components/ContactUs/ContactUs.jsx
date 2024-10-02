@@ -1,12 +1,25 @@
-import { Box, Button, Grid, Input, Stack, styled, Textarea, Typography } from "@mui/joy"
+import { Box, Button, Grid, Stack, Textarea, Typography } from "@mui/joy"
+import { Field, Form, Formik } from "formik";
+import React from "react";
+import { MaterialInput } from "../../Common/CustomInputs/CustomInputs";
+import Snackbars from "../../Common/ToastMessage/ToastMessage";
+import { formFields, initialValue, validationSchema } from "../../Common/FormFields/FormFields";
 
 
-const InputField = styled(Input)(({ theme }) => ({
-    borderRadius: '0',
-    fontSize: '.8rem'
-}))
 
 const ContactUs = () => {
+
+    const [toastMessage, setToastMessage] = React.useState({
+        bool: false,
+        message: "",
+        status: "",
+    });
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setToastMessage({ bool: false, message: toastMessage.message, status: toastMessage.status });
+    };
 
     let typesArr = [
         {
@@ -28,9 +41,28 @@ const ContactUs = () => {
     ]
 
 
+
+
+
+    const handleSubmitForm = (details) => {
+        console.log('after submit', details)
+        setToastMessage({
+            bool: true,
+            message: "Your message was just received by us! will reach you shortly",
+            status: "success"
+        })
+    }
+
+
     return (
         <>
             <Box>
+                <Snackbars
+                    status={toastMessage.status}
+                    message={toastMessage.message}
+                    open={toastMessage.bool}
+                    handleClose={handleClose}
+                />
                 <Stack spacing={4} sx={{
                     width: '80%',
                     margin: '4rem auto',
@@ -50,36 +82,62 @@ const ContactUs = () => {
                         <Typography level="h1" sx={{
                             color: '#16213e'
                         }} > Request a quote </Typography>
-                        <Grid container spacing={4} sx={{ flexGrow: 1, marginTop: '1rem' }}>
-                            <Grid xs={6}>
-                                <InputField placeholder="First Name (required)" />
-                            </Grid>
-                            <Grid xs={6}>
-                                <InputField placeholder="Last Name (required)" />
-                            </Grid>
-                            <Grid xs={6}>
-                                <InputField placeholder="Email (required)" />
-                            </Grid>
-                            <Grid xs={6}>
-                                <InputField placeholder="Phone number (required)" />
-                            </Grid>
-                            <Grid xs={12}>
-                                <Textarea minRows={4} maxRows={6} sx={{
-                                    fontSize: '.8rem',
-                                    borderRadius: '0'
-                                }} size="lg" placeholder="Leave us message" />
-                            </Grid>
-                        </Grid>
 
-                        <Button sx={{
-                            backgroundColor: '#f45905',
-                            marginTop: '3rem',
-                            borderRadius: '0',
-                            padding: '1rem 2.5rem 1rem 2.5rem',
-                            fontSize: '1.2rem'
-                        }} >
-                            Send
-                        </Button>
+
+                        <Formik initialValues={initialValue} validationSchema={validationSchema}
+                            onSubmit={(values, { setSubmitting }) => {
+                                handleSubmitForm(values)
+                                setSubmitting(false)
+                            }}
+                        >{({ }) => {
+                            return (
+                                <Form>
+                                    <Grid container spacing={4} sx={{ flexGrow: 1, marginTop: '1rem' }} >
+                                        {
+                                            formFields.map((el, i) => (
+                                                el.name === 'message' ? <Grid xs={12} key={i} >
+                                                    <Field name={el.name}>
+                                                        {({ field }) => (
+                                                            <Textarea
+                                                                type={el.type}
+                                                                placeholder={el.placeholder}
+                                                                {...field}
+                                                                minRows={4}
+                                                                maxRows={6}
+                                                                sx={{
+                                                                    fontSize: '.8rem',
+                                                                    borderRadius: '0'
+                                                                }}
+                                                                size="lg"
+                                                            />
+                                                        )}
+                                                    </Field>
+                                                </Grid> : <Grid xs={6} key={i} >
+                                                    <MaterialInput
+                                                        type={el.type}
+                                                        label={el.type}
+                                                        placeholder={el.placeholder}
+                                                        name={el.name}
+                                                    />
+                                                </Grid>
+                                            ))
+                                        }
+                                    </Grid>
+
+                                    <Button type="submit" sx={{
+                                        backgroundColor: '#f45905',
+                                        marginTop: '3rem',
+                                        borderRadius: '0',
+                                        padding: '1rem 2.5rem 1rem 2.5rem',
+                                        fontSize: '1.2rem'
+                                    }} >
+                                        Send
+                                    </Button>
+                                </Form>
+                            )
+                        }}
+
+                        </Formik>
                     </Box>
 
                     <Box>
@@ -111,3 +169,4 @@ const ContactUs = () => {
 }
 
 export default ContactUs
+
