@@ -52,11 +52,28 @@ const HomeSection = () => {
                 position: 'relative',
                 // display: { xs: 'none', sm: 'none', md: 'block' }
             }}>
-                <img
+                {/* <img
                     src={LandingPageImage}
                     style={{ width: '100%', display: 'block', backgroundSize: 'coverr', backgroundPosition: 'center' }}
                     alt="Landing Page"
-                />
+                /> */}
+                <Box sx={{
+                    // border: '2px solid green',
+                    height: { xs: '15rem', md: '60rem' }
+                }} >
+                    <img
+                        src={Main_photo}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "block",
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            objectFit: "cover",
+                            objectPosition: "top",
+                        }}
+                        alt="Landing Page" />
+                </Box>
                 <Box sx={{
                     position: 'absolute',
                     top: { xs: '2rem', md: '15rem' },

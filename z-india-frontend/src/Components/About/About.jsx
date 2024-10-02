@@ -40,7 +40,7 @@ const About = () => {
         <>
             <Box ref={ref} sx={{
                 position: 'absolute',
-                top: { xs: '95rem', md: '90rem' },
+                top: { xs: '100rem', md: '90rem' },
                 width: { sm: '100%', md: 'full' },
                 margin: 'auto',
                 // display: { xs: 'none', sm: 'none', md: 'block' }
