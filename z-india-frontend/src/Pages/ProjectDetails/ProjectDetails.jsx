@@ -45,6 +45,7 @@ const ProjectDetails = () => {
     const visibleLines = lines.slice(0, 2).join('\n');
 
     useEffect(() => {
+        document.title = 'Susmita Apartment - Laketown'
         window.scrollTo(0, 0);
     }, []);
 

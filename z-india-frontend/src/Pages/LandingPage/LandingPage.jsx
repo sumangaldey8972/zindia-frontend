@@ -4,6 +4,7 @@ import HomeSection from "../../Components/Home/HomeSection";
 import About from "../../Components/About/About";
 import { Box, CssBaseline, Typography } from "@mui/joy";
 import NavbarV2 from "../../Components/Navbar/Navbar-v2";
+import Sidebar from "../../Components/Sidebar/Sidebar";
 
 
 const LandingPage = () => {
@@ -12,6 +13,7 @@ const LandingPage = () => {
             {/* <Navbar /> */}
             <CssBaseline />
             <NavbarV2 />
+            <Sidebar />
             <HomeSection />
             <About />
         </>

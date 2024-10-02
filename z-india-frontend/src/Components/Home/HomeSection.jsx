@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Stack, Typography } from "@mui/joy";
 import { keyframes } from "@emotion/react";
 import LandingPageImage from "../../Assets/zindia_landing_page_image.jpg";
@@ -38,27 +38,31 @@ const HomeSection = () => {
         { image: "https://rayoflightthemes.com/wordpress-themes/dustro-wordpress-theme/wp-content/uploads/2021/03/measuring-tool.svg", heading: "Refurbishment", subheading: "Enhancing Aesthetics and Functionality with Quality Refurbishment." }
     ]
 
+    useEffect(() => {
+        document.title = '2bhk/3bhk flat-Laketown'
+    }, [])
+
     return (
         <>
             <Box sx={{
                 position: 'relative',
-                display: { xs: 'none', sm: 'none', md: 'block' }
+                // display: { xs: 'none', sm: 'none', md: 'block' }
             }}>
                 <img
                     src={LandingPageImage}
-                    style={{ width: '100%', display: 'block', backgroundSize:'coverr', backgroundPosition:'center'}}
+                    style={{ width: '100%', display: 'block', backgroundSize: 'coverr', backgroundPosition: 'center' }}
                     alt="Landing Page"
                 />
                 <Box sx={{
                     position: 'absolute',
-                    top: '15rem',
+                    top: { xs: '2rem', md: '15rem' },
                     left: '3rem',
                     animation: `${fadeIn} 2s ease-out`,
                 }} >
                     <Typography
                         level="h1"
                         sx={{
-                            fontSize: 'clamp(3rem, 5vw, 3rem)',
+                            fontSize: 'clamp(1.875rem, 1.3636rem + 2.1818vw, 3rem)',
                             color: 'white',
                             fontWeight: '600',
                         }}
@@ -86,12 +90,13 @@ const HomeSection = () => {
                     </Button>
                 </Box>
 
-                <Stack ref={ref} direction="row" sx={{
+                <Stack ref={ref} sx={{
                     justifyContent: 'center',
                     alignItems: 'center',
                     position: 'absolute',
-                    top: '40rem',
-                    right: '10rem',
+                    top: { xs: '18rem', md: '40rem' },
+                    right: { xs: '1rem', md: '10rem' },
+                    flexDirection: { xs: 'column', sm: 'column', md: 'row' },
                 }} >
                     <Box ref={ref} sx={{
                         background: '#00215b',
@@ -137,7 +142,7 @@ const HomeSection = () => {
                         paddingLeft: '2.5rem',
                         paddingBottom: '5rem',
                         paddingRight: '2.5rem',
-                        width: '35%',
+                        width: { xs: '90%', md: '35%' },
                         boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
                         background: 'white',
                         animation: hasIntersected ? `${popIn} 0.9s ease-out` : 'none',

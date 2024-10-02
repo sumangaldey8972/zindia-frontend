@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.c2da4467.css",
-    "main.js": "/static/js/main.2a4f189d.js",
+    "main.js": "/static/js/main.5b9913f9.js",
     "static/js/453.2af9fbb5.chunk.js": "/static/js/453.2af9fbb5.chunk.js",
     "static/media/zindia_landing_page_image.jpg": "/static/media/zindia_landing_page_image.6089f83ab4c1b6a009e6.jpg",
     "static/media/Main_photo.jpeg": "/static/media/Main_photo.3c33fc1de3930a818a66.jpeg",
     "index.html": "/index.html",
     "main.c2da4467.css.map": "/static/css/main.c2da4467.css.map",
-    "main.2a4f189d.js.map": "/static/js/main.2a4f189d.js.map",
+    "main.5b9913f9.js.map": "/static/js/main.5b9913f9.js.map",
     "453.2af9fbb5.chunk.js.map": "/static/js/453.2af9fbb5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c2da4467.css",
-    "static/js/main.2a4f189d.js"
+    "static/js/main.5b9913f9.js"
   ]
 }

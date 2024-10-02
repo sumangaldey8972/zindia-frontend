@@ -15,12 +15,12 @@ import { Link } from 'react-router-dom'
 
 export default function PropertyCard() {
   return (
-    <Card sx={{ width: 520, maxWidth: '100%', boxShadow: 'lg', margin: '2rem auto', }}>
+    <Card sx={{ width: { xs: 350, md: 520 }, maxWidth: '100%', boxShadow: 'lg', margin: '2rem auto', }}>
       <CardOverflow>
         <AspectRatio sx={{ minWidth: 200 }}>
           <img
             src={susmita_apartment}
-            srcSet="https://images.unsplash.com/photo-1593121925328-369cc8459c08?auto=format&fit=crop&w=286&dpr=2 2x"
+            srcSet={susmita_apartment}
             loading="lazy"
             alt=""
           />

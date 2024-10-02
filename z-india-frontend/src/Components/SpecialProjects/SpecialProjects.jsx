@@ -43,25 +43,24 @@ const SpecialProject = () => {
                 // border: '1px solid red',
                 display: 'flex',
                 justifyContent: 'center',
-                flexDirection:'column'
-
+                flexDirection: 'column'
             }} >
                 <Box sx={{
                     // border: '1px solid green',
                     textAlign: 'center'
                 }} >
                     <Typography level="h5" fontWeight="600" sx={{
-                        color:"#f45905"
+                        color: "#f45905"
                     }}  >Properties</Typography>
                     <Typography level="h1" fontWeight="400" sx={{
-                        color:'#00215b'
+                        color: '#00215b'
                     }} >For Sale</Typography>
                     <Typography level="h6" sx={{
-                        color:'gray'
+                        color: 'gray'
                     }} >Check out latest Prpoerties for sale</Typography>
                 </Box>
 
-                <PropertyCard/>
+                <PropertyCard />
             </Box>
         </>
     )

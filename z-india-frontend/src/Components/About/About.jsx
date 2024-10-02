@@ -6,6 +6,7 @@ import ContactUs from "../ContactUs/ContactUs";
 import Footer from "../Footer/Footer";
 import { keyframes } from "@emotion/react";
 import useIntersectionObserver from "../../Hooks/InterSectionObserver";
+import { useEffect } from "react";
 
 
 const fadeInLeft = keyframes`
@@ -35,27 +36,34 @@ const fadeInRight = keyframes`
 const About = () => {
     const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
 
-
     return (
         <>
             <Box ref={ref} sx={{
                 position: 'absolute',
-                top: '80rem',
-                width: 'full',
+                top: { xs: '95rem', md: '80rem' },
+                width: { sm: '100%', md: 'full' },
                 margin: 'auto',
-                display: { xs: 'none', sm: 'none', md: 'block' }
+                // display: { xs: 'none', sm: 'none', md: 'block' }
+                // border: '1px solid red'
             }}>
-                <Stack direction="row" spacing={3} justifyContent="center" alignItems="center" >
+                <Stack spacing={3} sx={{
+                    flexDirection: { xs: 'column', sm: 'column', md: 'row' },
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }} >
                     <Box sx={{
-                        width: '35%',
+                        width: { xs: '70%', md: '35%' },
                         margin: 'auto',
                         // animation: hasIntersected ? `${fadeInLeft} .9s ease-out` : 'none'
+
                     }} >
                         <img src="https://rayoflightthemes.com/wordpress-themes/dustro-wordpress-theme/wp-content/uploads/2021/02/Images-1-600x712.jpg" alt="" style={{ width: '100%', }} />
                     </Box>
                     <Box sx={{
-                        width: '40%',
+                        width: { sm: '70%', md: '40%' },
                         animation: hasIntersected ? `${fadeInRight} .9s ease-out` : 'none',
+                        padding: '1rem',
+                        // border: '1px solid green'
                     }}>
                         <Box>
                             <Typography level="body-sm" sx={{
