@@ -1,17 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.c2da4467.css",
-    "main.js": "/static/js/main.dd5fea38.js",
+    "main.css": "/static/css/main.017cc198.css",
+    "main.js": "/static/js/main.31cf5b2c.js",
     "static/js/453.2af9fbb5.chunk.js": "/static/js/453.2af9fbb5.chunk.js",
+    "static/media/deal.jpg": "/static/media/deal.1ec406e333f8c2121c98.jpg",
+    "static/media/about-us-heading-photo.jpg": "/static/media/about-us-heading-photo.618ef08a407496cd00c1.jpg",
+    "static/media/outside_view_2.jpg": "/static/media/outside_view_2.12d05226d8a24e14271e.jpg",
+    "static/media/inside_2.jpg": "/static/media/inside_2.1dd3e94797a6d2c0ecc1.jpg",
+    "static/media/inside_1.jpg": "/static/media/inside_1.51a36bbc588a9f05a8f9.jpg",
     "static/media/zindia_landing_page_image.jpg": "/static/media/zindia_landing_page_image.6089f83ab4c1b6a009e6.jpg",
+    "static/media/outside_view_1.jpg": "/static/media/outside_view_1.d36808d55134762c2da6.jpg",
+    "static/media/inside_3.jpg": "/static/media/inside_3.1e3cb2d676b62ddce5a1.jpg",
     "static/media/Main_photo.jpeg": "/static/media/Main_photo.3c33fc1de3930a818a66.jpeg",
+    "static/media/budhan_saha.jpeg": "/static/media/budhan_saha.3be7b28f9c5d514db5d4.jpeg",
     "index.html": "/index.html",
-    "main.c2da4467.css.map": "/static/css/main.c2da4467.css.map",
-    "main.dd5fea38.js.map": "/static/js/main.dd5fea38.js.map",
+    "main.017cc198.css.map": "/static/css/main.017cc198.css.map",
+    "main.31cf5b2c.js.map": "/static/js/main.31cf5b2c.js.map",
     "453.2af9fbb5.chunk.js.map": "/static/js/453.2af9fbb5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c2da4467.css",
-    "static/js/main.dd5fea38.js"
+    "static/css/main.017cc198.css",
+    "static/js/main.31cf5b2c.js"
   ]
 }
