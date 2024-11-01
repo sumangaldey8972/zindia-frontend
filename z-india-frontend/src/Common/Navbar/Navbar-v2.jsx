@@ -41,7 +41,7 @@ export default function NavbarV2() {
     { label: "About Us", route: "/about-us" },
     { label: "Services", route: "" },
     { label: "Works", route: "" },
-    { label: "Testimonials", route: "" },
+    { label: "Testimonials", route: "/testimonals" },
   ];
 
   const handleNavigate = (route) => {
