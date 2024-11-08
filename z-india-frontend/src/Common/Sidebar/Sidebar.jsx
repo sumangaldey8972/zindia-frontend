@@ -18,8 +18,8 @@ import { useNavigate } from "react-router-dom";
 export default function Sidebar() {
   const navigate = useNavigate();
 
-  const handleNavigate = (route) => {
-    navigate(route);
+  const handleNavigate = (router) => {
+    navigate(`/${router}`);
   };
 
   return (
@@ -99,7 +99,7 @@ export default function Sidebar() {
           }}
         >
           <ListItem>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleNavigate("")}>
               <HomeRoundedIcon />
               <ListItemContent>
                 <Typography level="title-sm">Home</Typography>
@@ -108,15 +108,10 @@ export default function Sidebar() {
           </ListItem>
 
           <ListItem>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleNavigate("about-us")}>
               <InfoIcon />
               <ListItemContent>
-                <Typography
-                  onClick={() => handleNavigate("/about-us")}
-                  level="title-sm"
-                >
-                  About Us
-                </Typography>
+                <Typography level="title-sm">About Us</Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
@@ -140,7 +135,7 @@ export default function Sidebar() {
           </ListItem>
 
           <ListItem>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleNavigate("testimonals")}>
               <GradingIcon />
               <ListItemContent>
                 <Typography level="title-sm">Testimonials</Typography>
