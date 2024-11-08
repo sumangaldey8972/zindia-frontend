@@ -14,7 +14,7 @@ const TestimonalsPage = () => {
 
       <HeadingTestimonialsSection />
 
-      <TestimonialCard />
+      {/* <TestimonialCard /> */}
     </>
   );
 };
