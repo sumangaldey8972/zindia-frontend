@@ -21,6 +21,7 @@ export default function Sidebar() {
 
 	const handleNavigate = (router) => {
 		navigate(`/${router}`);
+		closeSidebar();
 	};
 
 	return (
@@ -28,8 +29,9 @@ export default function Sidebar() {
 			className="Sidebar"
 			sx={{
 				position: { xs: "fixed", md: "sticky" },
+				right: 0, // Pin sidebar to the right
 				transform: {
-					xs: "translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))",
+					xs: "translateX(calc(100% * (1 - var(--SideNavigation-slideIn, 0))))",
 					md: "none",
 				},
 				transition: "transform 0.4s, width 0.4s",
@@ -42,16 +44,20 @@ export default function Sidebar() {
 				display: { sm: "flex", md: "none" },
 				flexDirection: "column",
 				gap: 2,
-				borderRight: "1px solid",
+				borderLeft: "1px solid", // Border on left side
 				borderColor: "divider",
+				height: "auto",
+				marginTop: "4rem",
+				borderRadius: "0.3rem",
+				fontSize: "16px",
 			}}
 		>
 			<GlobalStyles
 				styles={(theme) => ({
 					":root": {
-						"--Sidebar-width": "220px",
+						"--Sidebar-width": "260px",
 						[theme.breakpoints.up("lg")]: {
-							"--Sidebar-width": "240px",
+							"--Sidebar-width": "300px",
 						},
 					},
 				})}
@@ -65,7 +71,9 @@ export default function Sidebar() {
 					left: 0,
 					width: "100vw",
 					height: "100vh",
-					opacity: "var(--SideNavigation-slideIn)",
+					opacity: "var(--SideNavigation-slideIn)", // Only visible when slideIn is active
+					pointerEvents:
+						"var(--SideNavigation-slideIn)" === "1" ? "auto" : "none", // Prevents interaction when sidebar is closed
 					backgroundColor: "var(--joy-palette-background-backdrop)",
 					transition: "opacity 0.4s",
 					transform: {
@@ -76,7 +84,7 @@ export default function Sidebar() {
 				onClick={() => closeSidebar()}
 			/>
 			<Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-				<Typography level="title-lg">Z-INDIA REALTY</Typography>
+				{/* <Typography level="title-lg">Z-INDIA REALTY</Typography> */}
 				{/* <ColorSchemeToggle sx={{ ml: 'auto' }} /> */}
 			</Box>
 			<Box
@@ -101,53 +109,65 @@ export default function Sidebar() {
 				>
 					<ListItem>
 						<ListItemButton onClick={() => handleNavigate("")}>
-							<HomeRoundedIcon />
+							<HomeRoundedIcon sx={{ fontSize: 36 }} />
 							<ListItemContent>
-								<Typography level="title-sm">Home</Typography>
+								<Typography level="title-sm" sx={{ fontSize: 16 }}>
+									Home
+								</Typography>
 							</ListItemContent>
 						</ListItemButton>
 					</ListItem>
 
 					<ListItem>
 						<ListItemButton onClick={() => handleNavigate("about-us")}>
-							<InfoIcon />
+							<InfoIcon sx={{ fontSize: 32 }} />
 							<ListItemContent>
-								<Typography level="title-sm">About Us</Typography>
+								<Typography level="title-sm" sx={{ fontSize: 16 }}>
+									About Us
+								</Typography>
 							</ListItemContent>
 						</ListItemButton>
 					</ListItem>
 
 					<ListItem>
 						<ListItemButton>
-							<ShoppingCartRoundedIcon />
+							<ShoppingCartRoundedIcon sx={{ fontSize: 32 }} />
 							<ListItemContent>
-								<Typography level="title-sm">Services</Typography>
+								<Typography level="title-sm" sx={{ fontSize: 16 }}>
+									Services
+								</Typography>
 							</ListItemContent>
 						</ListItemButton>
 					</ListItem>
 
 					<ListItem>
 						<ListItemButton>
-							<EngineeringIcon />
+							<EngineeringIcon sx={{ fontSize: 32 }} />
 							<ListItemContent>
-								<Typography level="title-sm">Works</Typography>
+								<Typography level="title-sm" sx={{ fontSize: 16 }}>
+									Works
+								</Typography>
 							</ListItemContent>
 						</ListItemButton>
 					</ListItem>
 
 					<ListItem>
 						<ListItemButton onClick={() => handleNavigate("testimonals")}>
-							<GradingIcon />
+							<GradingIcon sx={{ fontSize: 32 }} />
 							<ListItemContent>
-								<Typography level="title-sm">Testimonials</Typography>
+								<Typography level="title-sm" sx={{ fontSize: 16 }}>
+									Testimonials
+								</Typography>
 							</ListItemContent>
 						</ListItemButton>
 					</ListItem>
 					<ListItem>
 						<ListItemButton onClick={() => handleNavigate("login")}>
-							<LoginIcon />
+							<LoginIcon sx={{ fontSize: 32 }} />
 							<ListItemContent>
-								<Typography level="title-sm">Login</Typography>
+								<Typography level="title-sm" sx={{ fontSize: 16 }}>
+									Login
+								</Typography>
 							</ListItemContent>
 						</ListItemButton>
 					</ListItem>

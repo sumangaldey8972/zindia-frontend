@@ -18,7 +18,7 @@ const Login = () => {
 		<>
 			<div className="login-container">
 				<div className="login-form">
-					<h2>Login</h2>
+					<h2>ADMIN LOGIN</h2>
 					<Formik
 						initialValues={{ email: "", password: "" }}
 						validationSchema={LoginSchema}
