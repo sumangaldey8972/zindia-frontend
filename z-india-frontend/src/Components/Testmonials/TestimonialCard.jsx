@@ -59,6 +59,42 @@ const TestimonialCard = () => {
 				</div>
 				<span className="close quote">”</span>
 			</div>
+			<div className="testimonial">
+				<span className="open quote">“</span>
+				<div className="image">
+					<div className="clip"></div>
+					<img src="https://placehold.co/100" />
+				</div>
+				<p>
+					I was impressed with the quality and attention to detail in every
+					aspect of [Company Name]'s work. They took the time to understand
+					exactly what I was looking for and made it happen. Their team truly
+					went above and beyond to make my dream a reality. Highly recommended
+					for anyone looking for a reliable and trustworthy real estate partner!
+				</p>
+				<div className="source">
+					<span>Naveen</span>
+				</div>
+				<span className="close quote">”</span>
+			</div>
+			<div className="testimonial">
+				<span className="open quote">“</span>
+				<div className="image">
+					<div className="clip"></div>
+					<img src="https://placehold.co/100" />
+				</div>
+				<p>
+					From the first consultation to the final walkthrough, Z-India-Realty
+					exceeded all my expectations. The team was attentive, knowledgeable,
+					and supportive throughout the entire journey. I couldn’t be more
+					pleased with the level of service I received. If you're looking for a
+					real estate company that cares, Z-India-Realty is the one!"
+				</p>
+				<div className="source">
+					<span>Dev</span>
+				</div>
+				<span className="close quote">”</span>
+			</div>
 		</div>
 	);
 };
