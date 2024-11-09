@@ -12,7 +12,7 @@ const LoginPage = () => {
 			<NavbarV2 />
 			<Sidebar />
 			<Login />
-			<Footer />
+			{/* <Footer /> */}
 		</>
 	);
 };

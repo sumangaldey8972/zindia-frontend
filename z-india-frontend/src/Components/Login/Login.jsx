@@ -3,6 +3,9 @@ import "./style.css";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup"; // for validation
 import { Box, Button, Grid, Stack, Textarea, Typography } from "@mui/joy";
+import axios from "axios"; // Import axios
+import { useNavigate } from "react-router-dom";
+import Snackbars from "../../Common/ToastMessage/ToastMessage";
 
 // Define validation schema using Yup
 const LoginSchema = Yup.object().shape({
@@ -13,19 +16,78 @@ const LoginSchema = Yup.object().shape({
 		.required("Password is required")
 		.min(6, "Password must be at least 6 characters"),
 });
+
 const Login = () => {
+	// API call function
+	const [toastMessage, setToastMessage] = React.useState({
+		bool: false,
+		message: "",
+		status: "",
+	});
+	const handleClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+		setToastMessage({
+			bool: false,
+			message: toastMessage.message,
+			status: toastMessage.status,
+		});
+	};
+	const navigate = useNavigate();
+	const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+		try {
+			const response = await axios.post(
+				"http://localhost:8080/auth/sign-in",
+				{
+					email_address: values.email,
+					password: values.password,
+				},
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+					withCredentials: true,
+				}
+			);
+			console.log("API Response:", response.data);
+			const token = JSON.stringify(response.data.user);
+			localStorage.setItem("authToken", token);
+			setToastMessage({
+				bool: response.data.status,
+				message: response.data.message,
+				status: "success",
+			});
+			navigate("/add-item");
+		} catch (error) {
+			console.error("API Error:", error);
+			setToastMessage({
+				bool: true,
+				message: error.response.data.message,
+				status: "error",
+			});
+
+			// Handle error, for example, show an error message
+		} finally {
+			setSubmitting(false);
+		}
+	};
+
 	return (
 		<>
+			<Snackbars
+				status={toastMessage.status}
+				message={toastMessage.message}
+				open={toastMessage.bool}
+				handleClose={handleClose}
+			/>
 			<div className="login-container">
 				<div className="login-form">
 					<h2>ADMIN LOGIN</h2>
 					<Formik
 						initialValues={{ email: "", password: "" }}
 						validationSchema={LoginSchema}
-						onSubmit={(values, { setSubmitting }) => {
-							console.log("Login details:", values);
-							setSubmitting(false);
-						}}
+						onSubmit={handleSubmit}
 					>
 						{({ errors, touched, isSubmitting }) => (
 							<Form>
@@ -58,6 +120,7 @@ const Login = () => {
 								{/* Submit Button */}
 								<Button
 									type="submit"
+									disabled={isSubmitting}
 									sx={{
 										width: "100%",
 										backgroundColor: "#f45905",
@@ -66,7 +129,7 @@ const Login = () => {
 										fontSize: "1.2rem",
 									}}
 								>
-									Send
+									{isSubmitting ? "Loading..." : "Login"}
 								</Button>
 							</Form>
 						)}
@@ -76,4 +139,5 @@ const Login = () => {
 		</>
 	);
 };
+
 export default Login;

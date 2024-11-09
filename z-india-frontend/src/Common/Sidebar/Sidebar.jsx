@@ -109,7 +109,7 @@ export default function Sidebar() {
 				>
 					<ListItem>
 						<ListItemButton onClick={() => handleNavigate("")}>
-							<HomeRoundedIcon sx={{ fontSize: 36 }} />
+							<HomeRoundedIcon sx={{ fontSize: 24 }} />
 							<ListItemContent>
 								<Typography level="title-sm" sx={{ fontSize: 16 }}>
 									Home
@@ -120,7 +120,7 @@ export default function Sidebar() {
 
 					<ListItem>
 						<ListItemButton onClick={() => handleNavigate("about-us")}>
-							<InfoIcon sx={{ fontSize: 32 }} />
+							<InfoIcon sx={{ fontSize: 24 }} />
 							<ListItemContent>
 								<Typography level="title-sm" sx={{ fontSize: 16 }}>
 									About Us
@@ -131,7 +131,7 @@ export default function Sidebar() {
 
 					<ListItem>
 						<ListItemButton>
-							<ShoppingCartRoundedIcon sx={{ fontSize: 32 }} />
+							<ShoppingCartRoundedIcon sx={{ fontSize: 24 }} />
 							<ListItemContent>
 								<Typography level="title-sm" sx={{ fontSize: 16 }}>
 									Services
@@ -142,7 +142,7 @@ export default function Sidebar() {
 
 					<ListItem>
 						<ListItemButton>
-							<EngineeringIcon sx={{ fontSize: 32 }} />
+							<EngineeringIcon sx={{ fontSize: 24 }} />
 							<ListItemContent>
 								<Typography level="title-sm" sx={{ fontSize: 16 }}>
 									Works
@@ -153,7 +153,7 @@ export default function Sidebar() {
 
 					<ListItem>
 						<ListItemButton onClick={() => handleNavigate("testimonals")}>
-							<GradingIcon sx={{ fontSize: 32 }} />
+							<GradingIcon sx={{ fontSize: 24 }} />
 							<ListItemContent>
 								<Typography level="title-sm" sx={{ fontSize: 16 }}>
 									Testimonials
@@ -163,7 +163,7 @@ export default function Sidebar() {
 					</ListItem>
 					<ListItem>
 						<ListItemButton onClick={() => handleNavigate("login")}>
-							<LoginIcon sx={{ fontSize: 32 }} />
+							<LoginIcon sx={{ fontSize: 24 }} />
 							<ListItemContent>
 								<Typography level="title-sm" sx={{ fontSize: 16 }}>
 									Login
