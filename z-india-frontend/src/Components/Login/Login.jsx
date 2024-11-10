@@ -58,7 +58,7 @@ const Login = () => {
 				message: response.data.message,
 				status: "success",
 			});
-			navigate("/add-item");
+			navigate("/control-panel");
 		} catch (error) {
 			console.error("API Error:", error);
 			setToastMessage({

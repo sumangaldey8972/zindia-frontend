@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { base_url } from "../apiConfig/api";
 
 const PrivateRoute = ({ children }) => {
 	const location = useLocation();
@@ -8,7 +9,7 @@ const PrivateRoute = ({ children }) => {
 
 	const getCheckSession = async () => {
 		try {
-			const response = await axios.get("http://localhost:8080/session", {
+			const response = await axios.get(`http://localhost:8080/session`, {
 				headers: {
 					"Content-Type": "application/json",
 				},

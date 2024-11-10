@@ -6,6 +6,7 @@ import TestimonalsPage from "../Pages/TestimonalsPage/TestimonalsPage";
 import LoginPage from "../Pages/LoginPage/LoginPage";
 import AddItem from "../Components/AddItem/AddItem";
 import PrivateRoute from "./PrivateRoute"; // Your PrivateRoute component
+import ControlPanelPage from "../Pages/ControlPanelPage/ControlPanelPage";
 
 const AllRoutes = () => {
 	return (
@@ -22,6 +23,14 @@ const AllRoutes = () => {
 					element={
 						<PrivateRoute>
 							<AddItem />
+						</PrivateRoute>
+					}
+				/>
+				<Route
+					path="/control-panel"
+					element={
+						<PrivateRoute>
+							<ControlPanelPage />
 						</PrivateRoute>
 					}
 				/>

@@ -1,7 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Field, Form, Formik, FieldArray } from "formik";
+import { useLocation } from "react-router-dom";
 import * as Yup from "yup";
-import { Box, Button, Grid, TextField, Typography, Stack } from "@mui/material";
+import {
+	Box,
+	Button,
+	Grid,
+	TextField,
+	Typography,
+	Stack,
+	unstable_ClassNameGenerator,
+} from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { base_url } from "../../apiConfig/api";
 
 const PropertySchema = Yup.object().shape({
 	project_name: Yup.string().required("Project name is required"),
@@ -9,11 +21,15 @@ const PropertySchema = Yup.object().shape({
 	city: Yup.string().required("City is required"),
 	posted_on: Yup.date().required("Posted on is required"),
 	status: Yup.string().required("Status is required"),
-	configuration: Yup.string().required("Configuration is required"),
+	// configuration: Yup.string().required("Configuration is required"),
+	configuration: Yup.array().of(
+		Yup.object().shape({
+			bedrooms: Yup.number().required("Number of bedrooms is required"),
+			balcony: Yup.number().required("Number of balconies is required"),
+		})
+	),
 	full_address: Yup.string().required("Full address is required"),
-	number_of_floores: Yup.number()
-		.required("Number of floors is required")
-		.min(1, "Must have at least 1 floor"),
+	number_of_floores: Yup.string().required("Number of floores is required"),
 	facing: Yup.string().required("Facing direction is required"),
 	overlooking: Yup.string().required("Overlooking information is required"),
 	posess_in: Yup.date().required("Possession date is required"),
@@ -25,7 +41,31 @@ const PropertySchema = Yup.object().shape({
 });
 
 const AddItem = () => {
+	const location = useLocation();
+	const navigate = useNavigate();
 	const [imagePreviews, setImagePreviews] = useState([]);
+	const [formData, setFormData] = useState({
+		project_name: "",
+		area: "",
+		city: "",
+		posted_on: "",
+		status: "",
+		configuration: {
+			bedrooms: "", // Adjust as needed
+			bathrooms: "", // Adjust as needed
+			balcony: "",
+		},
+		images: [],
+		full_address: "",
+		number_of_floores: "",
+		facing: "",
+		overlooking: "",
+		posess_in: "",
+		iframe_url: "",
+		places_nearby: [{ icon: "", label: "" }],
+		about_propoerty: "",
+		// Add other fields as necessary
+	});
 
 	const handleImageChange = (event, setFieldValue) => {
 		const files = Array.from(event.target.files);
@@ -33,36 +73,118 @@ const AddItem = () => {
 		setFieldValue("images", files);
 		setImagePreviews(previews);
 	};
+
+	useEffect(() => {
+		if (location.state?.project) {
+			const project = location.state.project;
+			console.log(project);
+			// Pre-populate the form with project data
+			setFormData({
+				project_name: project.project_name || "",
+				area: project.area || "",
+				city: project.city || "",
+				posted_on: project.posted_on || "",
+				status: project.status || "",
+				configuration: project.configuration || [
+					{
+						bedrooms: "",
+						balcony: "",
+					},
+				],
+				images: project.images || [],
+				full_address: project.full_address || "",
+				number_of_floores: project.number_of_floores || "",
+				facing: project.facing || "",
+				overlooking: project.overlooking || "",
+				posess_in: project.posess_in || "",
+				iframe_url: project.iframe_url || "",
+				places_nearby: project.places_nearby || [{ icon: "", label: "" }],
+				about_propoerty: project.about_propoerty || "",
+			});
+			setImagePreviews(
+				project.images
+					? project.images.map((img) => URL.createObjectURL(img))
+					: []
+			);
+		}
+	}, [location.state]);
+	const handleLogout = async () => {
+		try {
+			// Make an API call to destroy the session
+			const response = await axios.delete(`http://localhost:8080/session`); // Update with your API endpoint
+			if (response.status === 200) {
+				// Successfully logged out, navigate to login page
+				navigate("/login");
+			}
+		} catch (error) {
+			console.error("Logout failed", error);
+			// Handle error (e.g., show an alert or message)
+		}
+	};
+
+	const handleFormValue = async (values, isEdit) => {
+		if (isEdit) {
+			try {
+				const response = await axios.put(
+					`${base_url}/project/edit?project_id=${location.state.project._id}`,
+					values,
+					{
+						headers: {
+							"Content-Type": "multipart/form-data",
+						},
+						withCredentials: true,
+					}
+				);
+				console.log(response);
+				navigate("/control-panel");
+			} catch (err) {
+				console.log(err);
+			}
+		} else {
+			try {
+				const response = await axios.post(`${base_url}/project`, values, {
+					headers: {
+						"Content-Type": "application/json",
+					},
+					withCredentials: true,
+				});
+				console.log(response);
+				navigate("/control-panel");
+			} catch (err) {
+				console.log(err);
+			}
+		}
+	};
 	return (
 		<>
-			<Box sx={{ padding: 1, background: "#00215b", color: "white" }}>
-				<h3>Control Panel</h3>
+			<Box
+				sx={{
+					padding: 1,
+					background: "#00215b",
+					color: "white",
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "center",
+				}}
+			>
+				<Typography variant="h6">Control Panel</Typography>
+				<Button variant="outlined" color="secondary" onClick={handleLogout}>
+					Logout
+				</Button>
 			</Box>
 			<Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
 				<center>
-					<p>Add New Property</p>
+					<p>
+						{location.state?.project ? "Edit Property" : "Add New Property"}
+					</p>
 				</center>
 				<Formik
-					initialValues={{
-						project_name: "",
-						area: "",
-						city: "",
-						posted_on: "",
-						status: "",
-						configuration: "",
-						images: [],
-						full_address: "",
-						number_of_floores: "",
-						facing: "",
-						overlooking: "",
-						posess_in: "",
-						iframe_url: "",
-						places_nearby: [{ icon: "", label: "" }],
-						about_propoerty: "",
-					}}
+					initialValues={formData}
 					validationSchema={PropertySchema}
+					enableReinitialize={true} // Add this line
 					onSubmit={(values, { setSubmitting }) => {
 						console.log("Form Values:", values);
+						handleFormValue(values, location.state?.project ? true : false);
 						setSubmitting(false);
 					}}
 				>
@@ -132,18 +254,102 @@ const AddItem = () => {
 								</Grid>
 
 								{/* Configuration */}
-								<Grid item xs={12}>
-									<Field
+								<Box
+									sx={{
+										marginLeft: 2,
+										paddingTop: 2,
+										width: "98%",
+									}}
+								>
+									<Typography sx={{ marginBottom: 1 }}>
+										Configurations
+									</Typography>
+									<FieldArray
 										name="configuration"
-										as={TextField}
-										label="Configuration"
-										fullWidth
-										error={
-											touched.configuration && Boolean(errors.configuration)
-										}
-										helperText={touched.configuration && errors.configuration}
+										render={(arrayHelpers) => (
+											<>
+												{values.configuration &&
+												values.configuration.length > 0 ? (
+													values.configuration.map((config, index) => (
+														<Grid
+															container
+															spacing={2}
+															key={index}
+															sx={{ marginTop: 1 }}
+														>
+															<Grid item xs={4}>
+																<Field
+																	name={`configuration[${index}].bedrooms`}
+																	as={TextField}
+																	label="Bedrooms"
+																	fullWidth
+																	error={
+																		touched.configuration?.[index]?.bedrooms &&
+																		Boolean(
+																			errors.configuration?.[index]?.bedrooms
+																		)
+																	}
+																	helperText={
+																		touched.configuration?.[index]?.bedrooms &&
+																		errors.configuration?.[index]?.bedrooms
+																	}
+																/>
+															</Grid>
+															<Grid item xs={4}>
+																<Field
+																	name={`configuration[${index}].balcony`}
+																	as={TextField}
+																	label="Balcony"
+																	fullWidth
+																	error={
+																		touched.configuration?.[index]?.balcony &&
+																		Boolean(
+																			errors.configuration?.[index]?.balcony
+																		)
+																	}
+																	helperText={
+																		touched.configuration?.[index]?.balcony &&
+																		errors.configuration?.[index]?.balcony
+																	}
+																/>
+															</Grid>
+
+															{/* Button to remove the configuration */}
+															<Grid item xs={4}>
+																<Button
+																	variant="outlined"
+																	color="error"
+																	onClick={() => arrayHelpers.remove(index)} // Use arrayHelpers to remove item
+																>
+																	Delete
+																</Button>
+															</Grid>
+														</Grid>
+													))
+												) : (
+													<Typography>No configurations added yet.</Typography>
+												)}
+
+												{/* Button to add new configuration */}
+												<Grid item xs={12} mt={2}>
+													<Button
+														variant="outlined"
+														color="primary"
+														onClick={() =>
+															arrayHelpers.push({
+																bedrooms: "",
+																bathrooms: "",
+																balcony: "",
+															})
+														}
+													>
+														Add More Configuration
+													</Button>
+												</Grid>
+											</>
+										)}
 									/>
-								</Grid>
+								</Box>
 
 								{/* Full Address */}
 								<Grid item xs={12}>
@@ -165,7 +371,6 @@ const AddItem = () => {
 										name="number_of_floores"
 										as={TextField}
 										label="Number of Floors"
-										type="number"
 										fullWidth
 										error={
 											touched.number_of_floores &&
