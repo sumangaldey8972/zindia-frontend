@@ -50,11 +50,7 @@ const AddItem = () => {
 		city: "",
 		posted_on: "",
 		status: "",
-		configuration: {
-			bedrooms: "", // Adjust as needed
-			bathrooms: "", // Adjust as needed
-			balcony: "",
-		},
+		configuration: [],
 		images: [],
 		full_address: "",
 		number_of_floores: "",
@@ -282,6 +278,7 @@ const AddItem = () => {
 																	name={`configuration[${index}].bedrooms`}
 																	as={TextField}
 																	label="Bedrooms"
+																	value={config?.bedrooms || ""}
 																	fullWidth
 																	error={
 																		touched.configuration?.[index]?.bedrooms &&
@@ -301,6 +298,7 @@ const AddItem = () => {
 																	as={TextField}
 																	label="Balcony"
 																	fullWidth
+																	value={config?.balcony || ""}
 																	error={
 																		touched.configuration?.[index]?.balcony &&
 																		Boolean(
@@ -338,7 +336,6 @@ const AddItem = () => {
 														onClick={() =>
 															arrayHelpers.push({
 																bedrooms: "",
-																bathrooms: "",
 																balcony: "",
 															})
 														}
