@@ -7,6 +7,7 @@ import LoginPage from "../Pages/LoginPage/LoginPage";
 import AddItem from "../Components/AddItem/AddItem";
 import PrivateRoute from "./PrivateRoute"; // Your PrivateRoute component
 import ControlPanelPage from "../Pages/ControlPanelPage/ControlPanelPage";
+import ServicesPage from "../Pages/ServicesPage/ServicesPage";
 
 const AllRoutes = () => {
 	return (
@@ -17,6 +18,7 @@ const AllRoutes = () => {
 				<Route path="/:name" element={<ProjectDetails />} />
 				<Route path="/about-us" element={<AboutSection />} />
 				<Route path="/testimonals" element={<TestimonalsPage />} />
+				<Route path="/services" element={<ServicesPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route
 					path="/add-item"

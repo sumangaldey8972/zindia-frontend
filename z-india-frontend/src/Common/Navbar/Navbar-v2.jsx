@@ -39,7 +39,7 @@ export default function NavbarV2() {
 	let navItem = [
 		{ label: "Home", route: "/" },
 		{ label: "About Us", route: "/about-us" },
-		{ label: "Services", route: "" },
+		{ label: "Services", route: "/services" },
 		{ label: "Works", route: "" },
 		{ label: "Testimonials", route: "/testimonals" },
 		{ label: "Login", route: "/login" },
@@ -57,7 +57,7 @@ export default function NavbarV2() {
 				flexDirection: "row",
 				justifyContent: "space-between",
 				alignItems: "center",
-				width: "100%",
+				// width: "100%",
 				top: 0,
 				px: 1.5,
 				py: 1,

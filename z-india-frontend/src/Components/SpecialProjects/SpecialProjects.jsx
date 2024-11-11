@@ -1,10 +1,15 @@
-import { Box, Button, Typography } from "@mui/joy"
-import "./ImageLayout.css"
-import LinkIcon from '@mui/icons-material/Link';
+import { Box, Button, Typography } from "@mui/joy";
+import "./ImageLayout.css";
+import LinkIcon from "@mui/icons-material/Link";
 import useIntersectionObserver from "../../Hooks/InterSectionObserver";
 import { keyframes } from "@emotion/react";
 import PropertyCard from "./PropertiSalesCard";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { base_url } from "../../apiConfig/api";
 
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 const slideUp = keyframes`
     0% {
@@ -21,7 +26,6 @@ const slideUp = keyframes`
     }
 `;
 
-
 const popIn = keyframes`
   0% {
     transform: scale(0.5);
@@ -32,43 +36,95 @@ const popIn = keyframes`
 `;
 
 const SpecialProject = () => {
+	const [properties, setProperties] = useState([]);
+	const getAllProperties = async () => {
+		try {
+			const response = await axios.get(`http://localhost:8080/project`, {
+				headers: {
+					"Content-Type": "application/json",
+				},
+				withCredentials: true,
+			});
+			console.log(response.data);
+			setProperties(response.data.data);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+	useEffect(() => {
+		getAllProperties();
+	}, []);
 
-    const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
+	const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
 
+	return (
+		<>
+			<Box
+				ref={ref}
+				sx={{
+					animation: hasIntersected ? `${slideUp} .9s ease-out` : "none",
+					// border: '1px solid red',
+					display: "flex",
+					justifyContent: "center",
+					flexDirection: "column",
+				}}
+			>
+				<Box
+					sx={{
+						// border: '1px solid green',
+						textAlign: "center",
+					}}
+				>
+					<Typography
+						level="h5"
+						fontWeight="600"
+						sx={{
+							color: "#f45905",
+						}}
+					>
+						Properties
+					</Typography>
+					<Typography
+						level="h1"
+						fontWeight="400"
+						sx={{
+							color: "#00215b",
+						}}
+					>
+						For Sale
+					</Typography>
+					<Typography
+						level="h6"
+						sx={{
+							color: "gray",
+						}}
+					>
+						Check out latest Prpoerties for sale
+					</Typography>
+				</Box>
 
-    return (
-        <>
-            <Box ref={ref} sx={{
-                animation: hasIntersected ? `${slideUp} .9s ease-out` : 'none',
-                // border: '1px solid red',
-                display: 'flex',
-                justifyContent: 'center',
-                flexDirection: 'column'
-            }} >
-                <Box sx={{
-                    // border: '1px solid green',
-                    textAlign: 'center'
-                }} >
-                    <Typography level="h5" fontWeight="600" sx={{
-                        color: "#f45905"
-                    }}  >Properties</Typography>
-                    <Typography level="h1" fontWeight="400" sx={{
-                        color: '#00215b'
-                    }} >For Sale</Typography>
-                    <Typography level="h6" sx={{
-                        color: 'gray'
-                    }} >Check out latest Prpoerties for sale</Typography>
-                </Box>
+				{/* Map over properties and render a PropertyCard for each */}
 
-                <PropertyCard />
-            </Box>
-        </>
-    )
-}
+				<Box
+					sx={{
+						display: "flex",
+						flexWrap: "wrap", // To wrap items onto the next line if needed
+						justifyContent: "center", // Center the items
+					}}
+				>
+					{properties.map((property) => (
+						<PropertyCard key={property._id} property={property} />
+					))}
+				</Box>
+			</Box>
+		</>
+	);
+};
 
-export default SpecialProject
+export default SpecialProject;
 
-{/* <Typography level="body-sm" sx={{
+{
+	/* <Typography level="body-sm" sx={{
                     color: '#f45905',
                     textTransform: 'uppercase',
                     fontWeight: '700',
@@ -194,4 +250,5 @@ export default SpecialProject
                             </Button>
                         </div>
                     </div>
-                </div> */}
+                </div> */
+}

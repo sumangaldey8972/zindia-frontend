@@ -130,7 +130,7 @@ export default function Sidebar() {
 					</ListItem>
 
 					<ListItem>
-						<ListItemButton>
+						<ListItemButton onClick={() => handleNavigate("services")}>
 							<ShoppingCartRoundedIcon sx={{ fontSize: 24 }} />
 							<ListItemContent>
 								<Typography level="title-sm" sx={{ fontSize: 16 }}>
