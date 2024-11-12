@@ -6,6 +6,7 @@ import { Box, Button, Grid, Stack, Textarea, Typography } from "@mui/joy";
 import axios from "axios"; // Import axios
 import { useNavigate } from "react-router-dom";
 import Snackbars from "../../Common/ToastMessage/ToastMessage";
+import { base_url } from "../../apiConfig/api";
 
 // Define validation schema using Yup
 const LoginSchema = Yup.object().shape({
@@ -38,7 +39,7 @@ const Login = () => {
 	const handleSubmit = async (values, { setSubmitting, setErrors }) => {
 		try {
 			const response = await axios.post(
-				"http://localhost:8080/auth/sign-in",
+				`${base_url}/auth/sign-in`,
 				{
 					email_address: values.email,
 					password: values.password,

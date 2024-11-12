@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
 
 	const getCheckSession = async () => {
 		try {
-			const response = await axios.get(`http://localhost:8080/session`, {
+			const response = await axios.get(`${base_url}/session`, {
 				headers: {
 					"Content-Type": "application/json",
 				},

@@ -39,7 +39,7 @@ const SpecialProject = () => {
 	const [properties, setProperties] = useState([]);
 	const getAllProperties = async () => {
 		try {
-			const response = await axios.get(`http://localhost:8080/project`, {
+			const response = await axios.get(`${base_url}/project`, {
 				headers: {
 					"Content-Type": "application/json",
 				},

@@ -2,19 +2,32 @@ import React, { useState, useEffect } from "react";
 import { Field, Form, Formik, FieldArray } from "formik";
 import { useLocation } from "react-router-dom";
 import * as Yup from "yup";
-import {
-	Box,
-	Button,
-	Grid,
-	TextField,
-	Typography,
-	Stack,
-	unstable_ClassNameGenerator,
-} from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { base_url } from "../../apiConfig/api";
-
+import {
+	FaAirbnb,
+	FaHome,
+	FaHospital,
+	FaPlane,
+	FaSchool,
+	FaShoppingCart,
+	FaTrain,
+} from "react-icons/fa"; // Import icons from react-icons
+import { FaTrainSubway } from "react-icons/fa6";
+import {
+	Box,
+	Stack,
+	TextField,
+	Grid,
+	Typography,
+	Button,
+	MenuItem,
+	Select,
+	FormControl,
+	InputLabel,
+	FormHelperText,
+} from "@mui/material";
 const PropertySchema = Yup.object().shape({
 	project_name: Yup.string().required("Project name is required"),
 	area: Yup.string().required("Area is required"),
@@ -26,6 +39,12 @@ const PropertySchema = Yup.object().shape({
 		Yup.object().shape({
 			bedrooms: Yup.number().required("Number of bedrooms is required"),
 			balcony: Yup.number().required("Number of balconies is required"),
+		})
+	),
+	places_nearby: Yup.array().of(
+		Yup.object().shape({
+			icon: Yup.string().required("Icon is required"),
+			label: Yup.string().required("Label is required"),
 		})
 	),
 	full_address: Yup.string().required("Full address is required"),
@@ -51,6 +70,7 @@ const AddItem = () => {
 		posted_on: "",
 		status: "",
 		configuration: [],
+		places_nearby: [],
 		images: [],
 		full_address: "",
 		number_of_floores: "",
@@ -58,11 +78,23 @@ const AddItem = () => {
 		overlooking: "",
 		posess_in: "",
 		iframe_url: "",
-		places_nearby: [{ icon: "", label: "" }],
+		places_nearby: [],
 		about_propoerty: "",
 		// Add other fields as necessary
 	});
-
+	const iconOptions = [
+		{ label: "School", value: "school", icon: <FaSchool /> },
+		{ label: "Shopping", value: "shopping_cart", icon: <FaShoppingCart /> },
+		{ label: "Airport", value: "airport", icon: <FaPlane /> },
+		{ label: "Hospital", value: "hospital", icon: <FaHospital /> },
+		{ label: "Metro", value: "metro", icon: <FaTrainSubway /> },
+		{
+			label: "Railway Station",
+			value: "railway_station",
+			icon: <FaTrain />,
+		},
+		// Add more icons as needed
+	];
 	const handleImageChange = (event, setFieldValue) => {
 		const files = Array.from(event.target.files);
 		const previews = files.map((file) => URL.createObjectURL(file));
@@ -81,12 +113,7 @@ const AddItem = () => {
 				city: project.city || "",
 				posted_on: project.posted_on || "",
 				status: project.status || "",
-				configuration: project.configuration || [
-					{
-						bedrooms: "",
-						balcony: "",
-					},
-				],
+				configuration: project.configuration || [],
 				images: project.images || [],
 				full_address: project.full_address || "",
 				number_of_floores: project.number_of_floores || "",
@@ -94,20 +121,16 @@ const AddItem = () => {
 				overlooking: project.overlooking || "",
 				posess_in: project.posess_in || "",
 				iframe_url: project.iframe_url || "",
-				places_nearby: project.places_nearby || [{ icon: "", label: "" }],
+				places_nearby: project.places_nearby || [],
 				about_propoerty: project.about_propoerty || "",
 			});
-			setImagePreviews(
-				project.images
-					? project.images.map((img) => URL.createObjectURL(img))
-					: []
-			);
+			setImagePreviews(project.images ? [] : []);
 		}
 	}, [location.state]);
 	const handleLogout = async () => {
 		try {
 			// Make an API call to destroy the session
-			const response = await axios.delete(`http://localhost:8080/session`); // Update with your API endpoint
+			const response = await axios.delete(`${base_url}/session`); // Update with your API endpoint
 			if (response.status === 200) {
 				// Successfully logged out, navigate to login page
 				navigate("/login");
@@ -118,12 +141,55 @@ const AddItem = () => {
 		}
 	};
 
+	const convertToFormData = (
+		data,
+		formData = new FormData(),
+		parentKey = ""
+	) => {
+		for (const key in data) {
+			if (key == "configuration" || key == "places_nearby" || key == "images") {
+				continue;
+			}
+			if (data.hasOwnProperty(key)) {
+				const value = data[key];
+				const newKey = parentKey ? `${parentKey}[${key}]` : key;
+
+				if (Array.isArray(value)) {
+					// Handle arrays
+					value.forEach((item, index) => {
+						convertToFormData(item, formData, `${newKey}[${index}]`);
+					});
+				} else if (
+					value &&
+					typeof value === "object" &&
+					!(value instanceof File)
+				) {
+					// Handle nested objects
+					convertToFormData(value, formData, newKey);
+				} else {
+					// Handle regular fields
+					formData.append(newKey, value);
+				}
+			}
+		}
+		formData.append("configuration", JSON.stringify(data.configuration));
+		formData.append("places_nearby", JSON.stringify(data.places_nearby));
+		formData.append("images", data.images);
+		return formData;
+	};
+
 	const handleFormValue = async (values, isEdit) => {
+		console.log(values);
+		const formData = convertToFormData(values);
+		for (let [key, value] of formData.entries()) {
+			console.log(`${key}: ${value}`);
+		}
+
 		if (isEdit) {
 			try {
 				const response = await axios.put(
 					`${base_url}/project/edit?project_id=${location.state.project._id}`,
-					values,
+					formData,
 					{
 						headers: {
 							"Content-Type": "multipart/form-data",
@@ -138,9 +204,9 @@ const AddItem = () => {
 			}
 		} else {
 			try {
-				const response = await axios.post(`${base_url}/project`, values, {
+				const response = await axios.post(`${base_url}/project`, formData, {
 					headers: {
-						"Content-Type": "application/json",
+						"Content-Type": "multipart/form-data",
 					},
 					withCredentials: true,
 				});
@@ -273,12 +339,17 @@ const AddItem = () => {
 															key={index}
 															sx={{ marginTop: 1 }}
 														>
-															<Grid item xs={4}>
+															<Grid item xs={5}>
 																<Field
+																	type="number"
 																	name={`configuration[${index}].bedrooms`}
 																	as={TextField}
 																	label="Bedrooms"
-																	value={config?.bedrooms || ""}
+																	value={
+																		config?.bedrooms === undefined
+																			? ""
+																			: config?.bedrooms
+																	} // Set empty string if undefined
 																	fullWidth
 																	error={
 																		touched.configuration?.[index]?.bedrooms &&
@@ -292,13 +363,18 @@ const AddItem = () => {
 																	}
 																/>
 															</Grid>
-															<Grid item xs={4}>
+															<Grid item xs={5}>
 																<Field
+																	type="number"
 																	name={`configuration[${index}].balcony`}
 																	as={TextField}
 																	label="Balcony"
 																	fullWidth
-																	value={config?.balcony || ""}
+																	value={
+																		config?.balcony === undefined
+																			? ""
+																			: config?.balcony
+																	} // Set empty string if undefined
 																	error={
 																		touched.configuration?.[index]?.balcony &&
 																		Boolean(
@@ -313,11 +389,11 @@ const AddItem = () => {
 															</Grid>
 
 															{/* Button to remove the configuration */}
-															<Grid item xs={4}>
+															<Grid item xs={2}>
 																<Button
 																	variant="outlined"
 																	color="error"
-																	onClick={() => arrayHelpers.remove(index)} // Use arrayHelpers to remove item
+																	onClick={() => arrayHelpers.remove(index)}
 																>
 																	Delete
 																</Button>
@@ -335,12 +411,133 @@ const AddItem = () => {
 														color="primary"
 														onClick={() =>
 															arrayHelpers.push({
-																bedrooms: "",
-																balcony: "",
+																bedrooms: 0,
+																balcony: 0,
 															})
 														}
 													>
 														Add More Configuration
+													</Button>
+												</Grid>
+											</>
+										)}
+									/>
+								</Box>
+
+								{/* Places Nearby */}
+								<Box
+									sx={{
+										marginLeft: 2,
+										paddingTop: 2,
+										width: "98%",
+									}}
+								>
+									<Typography sx={{ marginBottom: 1 }}>
+										Places Nearby
+									</Typography>
+									<FieldArray
+										name="places_nearby"
+										render={(arrayHelpers) => (
+											<>
+												{values.places_nearby &&
+												values.places_nearby.length > 0 ? (
+													values.places_nearby.map((place, index) => (
+														<Grid
+															container
+															spacing={2}
+															key={index}
+															sx={{ marginTop: 1 }}
+														>
+															<Grid item xs={5}>
+																{/* Icon Dropdown */}
+																<FormControl
+																	fullWidth
+																	error={
+																		touched.places_nearby?.[index]?.icon &&
+																		Boolean(errors.places_nearby?.[index]?.icon)
+																	}
+																>
+																	<InputLabel>Icon</InputLabel>
+																	<Select
+																		label="Icon"
+																		value={place.icon || ""}
+																		onChange={(e) =>
+																			arrayHelpers.replace(index, {
+																				...place,
+																				icon: e.target.value,
+																			})
+																		}
+																	>
+																		{iconOptions.map((icon) => (
+																			<MenuItem
+																				key={icon.value}
+																				value={icon.value}
+																			>
+																				<Grid
+																					container
+																					alignItems="center"
+																					spacing={1}
+																				>
+																					<Grid item>{icon.icon}</Grid>
+																					<Grid item>{icon.label}</Grid>
+																				</Grid>
+																			</MenuItem>
+																		))}
+																	</Select>
+																	<FormHelperText>
+																		{touched.places_nearby?.[index]?.icon &&
+																			errors.places_nearby?.[index]?.icon}
+																	</FormHelperText>
+																</FormControl>
+															</Grid>
+															<Grid item xs={5}>
+																<Field
+																	name={`places_nearby[${index}].label`}
+																	as={TextField}
+																	label="Label"
+																	fullWidth
+																	error={
+																		touched.places_nearby?.[index]?.label &&
+																		Boolean(
+																			errors.places_nearby?.[index]?.label
+																		)
+																	}
+																	helperText={
+																		touched.places_nearby?.[index]?.label &&
+																		errors.places_nearby?.[index]?.label
+																	}
+																/>
+															</Grid>
+
+															{/* Button to remove the place */}
+															<Grid item xs={2}>
+																<Button
+																	variant="outlined"
+																	color="error"
+																	onClick={() => arrayHelpers.remove(index)}
+																>
+																	Delete
+																</Button>
+															</Grid>
+														</Grid>
+													))
+												) : (
+													<Typography>No places added yet.</Typography>
+												)}
+
+												{/* Button to add new place */}
+												<Grid item xs={12} mt={2}>
+													<Button
+														variant="outlined"
+														color="primary"
+														onClick={() =>
+															arrayHelpers.push({
+																icon: "",
+																label: "",
+															})
+														}
+													>
+														Add More Place
 													</Button>
 												</Grid>
 											</>

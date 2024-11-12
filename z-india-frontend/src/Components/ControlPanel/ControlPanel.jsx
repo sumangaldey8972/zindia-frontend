@@ -14,6 +14,7 @@ import {
 	Box,
 	Typography,
 } from "@mui/material";
+import { base_url } from "../../apiConfig/api";
 
 const ControlPanel = () => {
 	const [projects, setProjects] = useState([]);
@@ -21,9 +22,7 @@ const ControlPanel = () => {
 	useEffect(() => {
 		const fetchProjects = async () => {
 			try {
-				const response = await axios.get(
-					"https://z-india-backend.onrender.com/project"
-				); // Replace with your API endpoint
+				const response = await axios.get(`${base_url}/project`);
 				setProjects(response.data.data || []);
 			} catch (error) {
 				console.error("Error fetching projects:", error);
