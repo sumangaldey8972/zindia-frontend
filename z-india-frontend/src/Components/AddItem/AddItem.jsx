@@ -97,6 +97,7 @@ const AddItem = () => {
 	];
 	const handleImageChange = (event, setFieldValue) => {
 		const files = Array.from(event.target.files);
+		// console.log(files);
 		const previews = files.map((file) => URL.createObjectURL(file));
 		setFieldValue("images", files);
 		setImagePreviews(previews);
@@ -174,7 +175,9 @@ const AddItem = () => {
 		}
 		formData.append("configuration", JSON.stringify(data.configuration));
 		formData.append("places_nearby", JSON.stringify(data.places_nearby));
-		formData.append("images", data.images);
+		for (let i = 0; i < data.images.length; i++) {
+			formData.append("images", data.images[i]);
+		}
 		return formData;
 	};
 
