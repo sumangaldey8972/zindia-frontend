@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import {
 	Table,
 	TableBody,
@@ -13,12 +12,20 @@ import {
 	Button,
 	Box,
 	Typography,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
 } from "@mui/material";
 import { base_url } from "../../apiConfig/api";
 
 const ControlPanel = () => {
 	const [projects, setProjects] = useState([]);
+	const [openDialog, setOpenDialog] = useState(false); // State for dialog
+	const [selectedProject, setSelectedProject] = useState(null); // State for selected project to delete
 	const navigate = useNavigate();
+
 	useEffect(() => {
 		const fetchProjects = async () => {
 			try {
@@ -33,21 +40,30 @@ const ControlPanel = () => {
 	}, []);
 
 	const handleEdit = (project) => {
-		console.log("Edit project:", project);
 		navigate("/add-item", { state: { project } });
-		// Implement edit functionality here
 	};
 
 	const handleDelete = async (projectId) => {
-		console.log("Delete project:", projectId);
 		try {
-			const response = await axios.delete(
-				`${base_url}/delete?project_id=${projectId}`
+			await axios.delete(`${base_url}/project/delete?project_id=${projectId}`);
+			setProjects((prevProjects) =>
+				prevProjects.filter((project) => project._id !== projectId)
 			);
 			console.log("Property Deleted Successfully");
 		} catch (err) {
-			console.log("Some error occured while deleting a property");
+			console.log("Some error occurred while deleting a property");
 		}
+		setOpenDialog(false); // Close the dialog after deletion
+	};
+
+	const handleOpenDialog = (project) => {
+		setSelectedProject(project);
+		setOpenDialog(true); // Open the dialog
+	};
+
+	const handleCloseDialog = () => {
+		setOpenDialog(false); // Close the dialog
+		setSelectedProject(null); // Clear selected project
 	};
 
 	return (
@@ -100,7 +116,7 @@ const ControlPanel = () => {
 										<Button
 											variant="contained"
 											color="secondary"
-											onClick={() => handleDelete(project._id)}
+											onClick={() => handleOpenDialog(project)}
 										>
 											Delete
 										</Button>
@@ -109,7 +125,7 @@ const ControlPanel = () => {
 							))
 						) : (
 							<TableRow>
-								<TableCell colSpan={3} align="center">
+								<TableCell colSpan={5} align="center">
 									No projects available
 								</TableCell>
 							</TableRow>
@@ -117,6 +133,33 @@ const ControlPanel = () => {
 					</TableBody>
 				</Table>
 			</TableContainer>
+
+			{/* Delete Confirmation Dialog */}
+			<Dialog
+				open={openDialog}
+				onClose={handleCloseDialog}
+				aria-labelledby="delete-dialog-title"
+				aria-describedby="delete-dialog-description"
+			>
+				<DialogTitle id="delete-dialog-title">Confirm Deletion</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="delete-dialog-description">
+						Are you sure you want to delete this project?
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleCloseDialog} color="primary">
+						Cancel
+					</Button>
+					<Button
+						onClick={() => handleDelete(selectedProject._id)}
+						color="secondary"
+						variant="contained"
+					>
+						Delete
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</Box>
 	);
 };
