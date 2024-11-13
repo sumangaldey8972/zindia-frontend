@@ -63,6 +63,7 @@ const AddItem = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [imagePreviews, setImagePreviews] = useState([]);
+	const [images, setImages] = useState(null);
 	const [formData, setFormData] = useState({
 		project_name: "",
 		area: "",
@@ -125,7 +126,14 @@ const AddItem = () => {
 				places_nearby: project.places_nearby || [],
 				about_propoerty: project.about_propoerty || "",
 			});
-			setImagePreviews(project.images ? [] : []);
+			setImages(project.images);
+			const previews = project.images?.map((img) => {
+				// Convert binary data to base64 string
+				return `data:${img.mimeType};base64,${img.data}`;
+			});
+
+			// Set the previews in state
+			setImagePreviews(previews);
 		}
 	}, [location.state]);
 	const handleLogout = async () => {

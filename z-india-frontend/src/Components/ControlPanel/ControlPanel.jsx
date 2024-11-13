@@ -38,9 +38,16 @@ const ControlPanel = () => {
 		// Implement edit functionality here
 	};
 
-	const handleDelete = (projectId) => {
+	const handleDelete = async (projectId) => {
 		console.log("Delete project:", projectId);
-		// Implement delete functionality here
+		try {
+			const response = await axios.delete(
+				`${base_url}/delete?project_id=${projectId}`
+			);
+			console.log("Property Deleted Successfully");
+		} catch (err) {
+			console.log("Some error occured while deleting a property");
+		}
 	};
 
 	return (
