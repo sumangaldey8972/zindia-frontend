@@ -50,14 +50,7 @@ const ProjectDetails = () => {
 	// Scroll to top on component mount
 	const location = useLocation();
 	const { property } = location.state;
-	const images = [
-		main_photo,
-		outside_photo_1,
-		outside_photo_2,
-		inside_1,
-		inside_2,
-		inside_3,
-	];
+	const images = [];
 
 	const [flat_name, set_flat_name] = useState("");
 
@@ -219,10 +212,10 @@ const ProjectDetails = () => {
 										//   width={300}
 										dynamicHeight={true}
 									>
-										{images.map((img, index) => (
+										{property.images.map((img, index) => (
 											<div key={index}>
 												<img
-													src={img}
+													src={`data:${img.mimeType};base64,${img.data}`}
 													alt={`Slide ${index + 1}`}
 													style={{
 														height: "420px",

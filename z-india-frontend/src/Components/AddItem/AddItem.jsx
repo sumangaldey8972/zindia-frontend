@@ -113,7 +113,9 @@ const AddItem = () => {
 				project_name: project.project_name || "",
 				area: project.area || "",
 				city: project.city || "",
-				posted_on: project.posted_on || "",
+				posted_on: project.posted_on
+					? new Date(project.posted_on).toISOString().split("T")[0]
+					: "",
 				status: project.status || "",
 				configuration: project.configuration || [],
 				images: project.images || [],
@@ -121,7 +123,9 @@ const AddItem = () => {
 				number_of_floores: project.number_of_floores || "",
 				facing: project.facing || "",
 				overlooking: project.overlooking || "",
-				posess_in: project.posess_in || "",
+				posess_in: project.posess_in
+					? new Date(project.posess_in).toISOString().split("T")[0]
+					: "",
 				iframe_url: project.iframe_url || "",
 				places_nearby: project.places_nearby || [],
 				about_propoerty: project.about_propoerty || "",

@@ -20,43 +20,44 @@ export default function PropertyCard({ property }) {
 		posted_on,
 		configuration,
 		full_address,
-		number_of_floores,
-		facing,
-		overlooking,
 		images,
-		_id,
 	} = property;
 
-	const propertyImage = images?.[0] || require("../../Assets/Main_photo.jpeg");
+	// If there is an image, format it for display; otherwise, use a placeholder
+	const propertyImage = images?.[0]
+		? `data:${images[0].mimeType};base64,${images[0].data}`
+		: require("../../Assets/Main_photo.jpeg");
 
 	return (
 		<Card
 			sx={{
-				width: { xs: 300, md: 420 }, // Reduced width
+				width: { xs: 300, md: 420 },
 				maxWidth: "100%",
 				boxShadow: "md",
-				margin: "1.5rem auto", // Smaller margin
-				padding: 1, // Reduced padding
+				margin: "1.5rem auto",
+				padding: 1,
 			}}
 		>
 			<CardOverflow>
-				<AspectRatio sx={{ minWidth: 180 }}>
-					{" "}
-					{/* Reduced image area */}
+				<AspectRatio
+					ratio="16/9"
+					sx={{ minWidth: 180, maxHeight: 180, overflow: "hidden" }}
+				>
 					<img
 						src={propertyImage}
 						alt={`${project_name} image`}
 						loading="lazy"
-						style={{ objectFit: "cover" }} // Ensures image fills without overflow
+						style={{
+							objectFit: "cover",
+							width: "100%",
+							height: "100%",
+						}}
 					/>
 				</AspectRatio>
 			</CardOverflow>
 			<CardContent sx={{ padding: 1 }}>
-				{" "}
-				{/* Reduced content padding */}
-				<Typography level="body-xs">{`${project_name}, ${area}, ${city}`}</Typography>
 				<Typography
-					level="h5" // Smaller headline level
+					level="h5"
 					color="neutral"
 					textColor="text.primary"
 					overlay
@@ -65,7 +66,7 @@ export default function PropertyCard({ property }) {
 					{project_name} in {area}, {city}
 				</Typography>
 				<Typography
-					level="body-sm" // Smaller font size
+					level="body-sm"
 					sx={{ mt: 0.5, fontWeight: "md" }}
 					endDecorator={
 						<Chip component="span" size="sm" variant="soft" color="success">
@@ -84,28 +85,6 @@ export default function PropertyCard({ property }) {
 					)}
 				</Typography>
 				<Typography level="body-sm">Address: {full_address}</Typography>
-				<Box sx={{ display: "flex", gap: 2, mt: 1 }}>
-					<Box>
-						<Typography level="body-xs">Bedrooms</Typography>
-						<Typography startDecorator={<BedIcon />} level="body-sm">
-							{configuration.map((config) => config.bedrooms).join("/")}
-						</Typography>
-					</Box>
-
-					<Box>
-						<Typography level="body-xs">Bathrooms</Typography>
-						<Typography startDecorator={<BathtubIcon />} level="body-sm">
-							{configuration.reduce((sum, config) => sum + config.balcony, 0)}
-						</Typography>
-					</Box>
-
-					<Box>
-						<Typography level="body-xs">Area</Typography>
-						<Typography startDecorator={<Crop54Icon />} level="body-sm">
-							{property.area_size || "N/A"} sqft
-						</Typography>
-					</Box>
-				</Box>
 			</CardContent>
 
 			<CardOverflow>
@@ -118,8 +97,8 @@ export default function PropertyCard({ property }) {
 						backgroundColor: "#f45905",
 						fontSize: "0.875rem",
 						padding: "0.5rem 1rem",
-					}} // Smaller font and padding
-					size="md" // Medium size
+					}}
+					size="md"
 				>
 					Visit Now
 				</Button>
