@@ -10,6 +10,7 @@ import { base_url } from "../../apiConfig/api";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import CardSkeleton from "../../Common/Skeleton/CardSkeleton";
 
 const slideUp = keyframes`
     0% {
@@ -36,95 +37,105 @@ const popIn = keyframes`
 `;
 
 const SpecialProject = () => {
-	const [properties, setProperties] = useState([]);
-	const getAllProperties = async () => {
-		try {
-			const response = await axios.get(`${base_url}/project`, {
-				headers: {
-					"Content-Type": "application/json",
-				},
-				withCredentials: true,
-			});
-			console.log(response.data);
-			setProperties(response.data.data);
-		} catch (err) {
-			console.log(err);
-		}
-	};
-	useEffect(() => {
-		getAllProperties();
-	}, []);
+    const [properties, setProperties] = useState([]);
+    const [loading, setLoading] = useState(false)
 
-	const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
+    const getAllProperties = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`${base_url}/project`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            console.log(response.data);
+            setProperties(response.data.data);
+            setLoading(false)
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    useEffect(() => {
+        getAllProperties();
+    }, []);
 
-	return (
-		<>
-			<Box
-				ref={ref}
-				sx={{
-					animation: hasIntersected ? `${slideUp} .9s ease-out` : "none",
-					// border: '1px solid red',
-					display: "flex",
-					justifyContent: "center",
-					flexDirection: "column",
-				}}
-			>
-				<Box
-					sx={{
-						// border: '1px solid green',
-						textAlign: "center",
-					}}
-				>
-					<Typography
-						level="h5"
-						fontWeight="600"
-						sx={{
-							color: "#f45905",
-						}}
-					>
-						Properties
-					</Typography>
-					<Typography
-						level="h1"
-						fontWeight="400"
-						sx={{
-							color: "#00215b",
-						}}
-					>
-						For Sale
-					</Typography>
-					<Typography
-						level="h6"
-						sx={{
-							color: "gray",
-						}}
-					>
-						Check out latest Prpoerties for sale
-					</Typography>
-				</Box>
+    const [ref, hasIntersected] = useIntersectionObserver({ threshold: 0.1 });
 
-				{/* Map over properties and render a PropertyCard for each */}
+    return (
+        <>
 
-				<Box
-					sx={{
-						display: "flex",
-						flexWrap: "wrap", // To wrap items onto the next line if needed
-						justifyContent: "center", // Center the items
-					}}
-				>
-					{properties.map((property) => (
-						<PropertyCard key={property._id} property={property} />
-					))}
-				</Box>
-			</Box>
-		</>
-	);
+            <Box
+                ref={ref}
+                sx={{
+                    animation: hasIntersected ? `${slideUp} .9s ease-out` : "none",
+                    // border: '1px solid red',
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                }}
+            >
+                <Box
+                    sx={{
+                        // border: '1px solid green',
+                        textAlign: "center",
+                    }}
+                >
+                    <Typography
+                        level="h5"
+                        fontWeight="600"
+                        sx={{
+                            color: "#f45905",
+                        }}
+                    >
+                        Properties
+                    </Typography>
+                    <Typography
+                        level="h1"
+                        fontWeight="400"
+                        sx={{
+                            color: "#00215b",
+                        }}
+                    >
+                        For Sale
+                    </Typography>
+                    <Typography
+                        level="h6"
+                        sx={{
+                            color: "gray",
+                        }}
+                    >
+                        Check out latest Prpoerties for sale
+                    </Typography>
+                </Box>
+
+                {/* Map over properties and render a PropertyCard for each */}
+
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexWrap: "wrap", // To wrap items onto the next line if needed
+                        justifyContent: "center", // Center the items
+                    }}
+                >
+                    {
+                        loading ? <CardSkeleton /> : <>
+                            {properties.map((property) => (
+                                <PropertyCard key={property._id} property={property} />
+                            ))}
+                        </>
+                    }
+
+                </Box>
+            </Box>
+        </>
+    );
 };
 
 export default SpecialProject;
 
 {
-	/* <Typography level="body-sm" sx={{
+    /* <Typography level="body-sm" sx={{
                     color: '#f45905',
                     textTransform: 'uppercase',
                     fontWeight: '700',
