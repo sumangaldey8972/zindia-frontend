@@ -27,6 +27,7 @@ export default function HeaderSection({ property }) {
 					Posted on - {dateFormat(property.posted_on)} | {property.status}
 				</Typography>
 			</Stack>
+			{/* <h3></h3> */}
 			<Stack
 				direction="row"
 				sx={{ justifyContent: "space-between", width: "100%" }}
