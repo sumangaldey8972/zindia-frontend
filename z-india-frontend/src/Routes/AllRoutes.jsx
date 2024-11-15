@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute"; // Your PrivateRoute component
 import ControlPanelPage from "../Pages/ControlPanelPage/ControlPanelPage";
 import ServicesPage from "../Pages/ServicesPage/ServicesPage";
 import ControPannelVTwo from "../Components/ControlPanel/ControPannelVTwo";
+import LoginVTwo from "../Components/Login/LoginVTwo";
 
 const AllRoutes = () => {
 	return (
@@ -20,7 +21,7 @@ const AllRoutes = () => {
 				<Route path="/about-us" element={<AboutSection />} />
 				<Route path="/testimonals" element={<TestimonalsPage />} />
 				<Route path="/services" element={<ServicesPage />} />
-				<Route path="/login" element={<LoginPage />} />
+				<Route path="/login" element={<LoginVTwo />} />
 				<Route
 					path="/add-item"
 					element={
