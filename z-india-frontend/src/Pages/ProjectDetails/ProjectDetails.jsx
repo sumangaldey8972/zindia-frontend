@@ -45,12 +45,15 @@ import outside_photo_2 from "../../Assets/outside_view_2.jpg";
 import inside_1 from "../../Assets/inside_1.jpg";
 import inside_2 from "../../Assets/inside_2.jpg";
 import inside_3 from "../../Assets/inside_3.jpg";
+import { dateFormat } from "../../utils/dateFormat.utils";
+import EnquireModal from "../../Common/Modal/EnquireModal";
 
 const ProjectDetails = () => {
 	// Scroll to top on component mount
 	const location = useLocation();
 	const { property } = location.state;
 	const images = [];
+	const [open, setOpen] = useState(false)
 
 	const [flat_name, set_flat_name] = useState("");
 
@@ -82,6 +85,7 @@ const ProjectDetails = () => {
 			<CssBaseline />
 			<NavbarV2 />
 			<Sidebar />
+			<EnquireModal open={open} setOpen={setOpen} />
 			{flat_name == "menoka_appartment_laketown" ? (
 				<Box
 					sx={{
@@ -155,6 +159,7 @@ const ProjectDetails = () => {
 								backgroundColor: "#f45905",
 								fontSize: "1.5rem",
 							}}
+							onClick={() => setOpen(true)}
 						>
 							What are you waiting for ? Contact Now
 						</Button>
@@ -395,7 +400,7 @@ const ProjectDetails = () => {
 												Posession in
 											</Typography>
 											<Typography level="body-md" fontWeight="600">
-												{property.posess_in}
+												{dateFormat(property.posess_in)}
 											</Typography>
 										</Box>
 
