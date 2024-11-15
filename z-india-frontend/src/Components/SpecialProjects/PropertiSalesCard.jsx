@@ -1,21 +1,22 @@
-import * as React from "react";
-import AspectRatio from "@mui/joy/AspectRatio";
-import Button from "@mui/joy/Button";
-import Card from "@mui/joy/Card";
-import CardContent from "@mui/joy/CardContent";
-import CardOverflow from "@mui/joy/CardOverflow";
-import Chip from "@mui/joy/Chip";
-import Typography from "@mui/joy/Typography";
-import { Box } from "@mui/joy";
-import BedIcon from "@mui/icons-material/Bed";
-import BathtubIcon from "@mui/icons-material/Bathtub";
-import Crop54Icon from "@mui/icons-material/Crop54";
-import { Link } from "react-router-dom";
-import { MdBedroomParent } from "react-icons/md";
-import { IoBed } from "react-icons/io5";
-import { MdBathtub } from "react-icons/md";
+import * as React from 'react';
+import AspectRatio from '@mui/joy/AspectRatio';
+import Button from '@mui/joy/Button';
+import Card from '@mui/joy/Card';
+import CardContent from '@mui/joy/CardContent';
+import CardOverflow from '@mui/joy/CardOverflow';
+import Chip from '@mui/joy/Chip';
+import Typography from '@mui/joy/Typography';
+import { Box } from '@mui/joy';
+import BedIcon from '@mui/icons-material/Bed';
+import BathtubIcon from '@mui/icons-material/Bathtub';
+import Crop54Icon from '@mui/icons-material/Crop54';
+import susmita_apartment from "../../Assets/Main_photo.jpeg"
+import { Link } from 'react-router-dom'
+import { dateFormat } from '../../utils/dateFormat.utils';
 
 export default function PropertyCard({ property }) {
+	console.log('property card', property)
+
 	const {
 		project_name,
 		sub_heading,
@@ -24,96 +25,92 @@ export default function PropertyCard({ property }) {
 		posted_on,
 		configuration,
 		full_address,
-		images,
-	} = property;
+		length,
+		width,
+		images
+	} = property
 
-	// If there is an image, format it for display; otherwise, use a placeholder
 	const propertyImage = images?.[0]
 		? `data:${images[0].mimeType};base64,${images[0].data}`
 		: require("../../Assets/Main_photo.jpeg");
 
 	return (
-		<Card
-			sx={{
-				width: { xs: 300, md: 420 },
-				maxWidth: "100%",
-				boxShadow: "md",
-				margin: "1.5rem auto",
-				padding: 1,
-			}}
-		>
+		<Card sx={{ width: { xs: 350, md: 520 }, maxWidth: '100%', boxShadow: 'lg', margin: '2rem auto', }}>
 			<CardOverflow>
-				<AspectRatio
-					ratio="16/9"
-					sx={{ minWidth: 180, maxHeight: 180, overflow: "hidden" }}
-				>
+				<AspectRatio sx={{ minWidth: 200 }}>
 					<img
 						src={propertyImage}
-						alt={`${project_name} image`}
+						srcSet={propertyImage}
 						loading="lazy"
-						style={{
-							objectFit: "cover",
-							width: "100%",
-							height: "100%",
-						}}
+						alt=""
 					/>
 				</AspectRatio>
 			</CardOverflow>
-			<CardContent sx={{ padding: 1 }}>
+			<CardContent>
 				<Typography level="body-xs">{sub_heading}</Typography>
 				<Typography
-					level="h5"
+					// href="#product-card"
+					level='h3'
 					color="neutral"
 					textColor="text.primary"
 					overlay
-					sx={{ fontWeight: "medium", color: "#00215b" }}
+					// endDecorator={<ArrowOutwardIcon />}
+					sx={{ fontWeight: 'md', color: '#00215b' }}
 				>
 					{project_name} in {area}, {city}
 				</Typography>
+
 				<Typography
-					level="body-sm"
-					sx={{ mt: 0.5, fontWeight: "md" }}
+					level="body-md"
+					sx={{ mt: 1, fontWeight: 'xl' }}
 					endDecorator={
 						<Chip component="span" size="sm" variant="soft" color="success">
 							attractive price
 						</Chip>
 					}
 				>
-					Added: {new Date(posted_on).toLocaleDateString()}
+					Added : {dateFormat(posted_on)}
 				</Typography>
-				<Typography level="body-sm" sx={{ fontWeight: "medium" }}>
-					{configuration.map(
-						(config, index) =>
-							`${config.bedrooms} BHK${
-								index < configuration.length - 1 ? ", " : ""
-							}`
-					)}
-				</Typography>
-				<Typography level="body-sm">Address: {full_address}</Typography>
-				<Box
-					sx={{
-						display: "flex",
-						alignItems: "center",
-						gap: 2,
-						justifyContent: "space-around",
-					}}
+
+				<Typography
+					level="body-md"
+					sx={{ fontWeight: 'xl' }}
 				>
-					<Typography level="body-sm">
-						<IoBed />
-						{configuration.map(
-							(config, index) =>
-								`${config.bedrooms}${
-									index < configuration.length - 1 ? "/" : ""
-								}`
-						)}
-					</Typography>
-					<Typography>
-						<MdBathtub />
-					</Typography>
-					<Typography level="body-sm">Area: {area}</Typography>
+
+					{configuration.map((prop) => `${prop.bedrooms}bhk`).join(' , ')}
+				</Typography>
+
+				<Typography level="body-lg"  >
+					Address : {full_address}
+				</Typography>
+
+				<Box sx={{
+					display: 'flex',
+					// border:'1px solid orange',
+					gap: 4
+				}} >
+					<Box>
+						<Typography>Bedrooms</Typography>
+						<Typography startDecorator={<BedIcon />} >
+							{configuration.map((prop) => prop.bedrooms).join('/')}
+						</Typography>
+					</Box>
+
+					<Box>
+						<Typography>Bathrooms</Typography>
+						<Typography startDecorator={<BathtubIcon />} >
+							2
+						</Typography>
+					</Box>
+
+					<Box>
+						<Typography>Area</Typography>
+						<Typography startDecorator={<Crop54Icon />} >
+							{length} sqft, {width} sqft
+						</Typography>
+					</Box>
 				</Box>
 			</CardContent>
-
 			<CardOverflow>
 				<Button
 					component={Link}
