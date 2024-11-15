@@ -50,6 +50,8 @@ const PropertySchema = Yup.object().shape({
 	),
 	full_address: Yup.string().required("Full address is required"),
 	number_of_floores: Yup.string().required("Number of floores is required"),
+	length: Yup.number().required("Length is required"),
+	width: Yup.number().required("Width is required"),
 	facing: Yup.string().required("Facing direction is required"),
 	overlooking: Yup.string().required("Overlooking information is required"),
 	posess_in: Yup.date().required("Possession date is required"),
@@ -77,6 +79,8 @@ const AddItem = () => {
 		images: [],
 		full_address: "",
 		number_of_floores: "",
+		length: "",
+		width: "",
 		facing: "",
 		overlooking: "",
 		posess_in: "",
@@ -124,6 +128,8 @@ const AddItem = () => {
 				images: project.images || [],
 				full_address: project.full_address || "",
 				number_of_floores: project.number_of_floores || "",
+				length: project.length || "",
+				width: project.width || "",
 				facing: project.facing || "",
 				overlooking: project.overlooking || "",
 				posess_in: project.posess_in
@@ -602,6 +608,27 @@ const AddItem = () => {
 										helperText={
 											touched.number_of_floores && errors.number_of_floores
 										}
+									/>
+								</Grid>
+								{/* Dimensions */}
+								<Grid item xs={12}>
+									<Field
+										name="length"
+										as={TextField}
+										label="Length"
+										fullWidth
+										error={touched.length && Boolean(errors.length)}
+										helperText={touched.length && errors.length}
+									/>
+								</Grid>
+								<Grid item xs={12}>
+									<Field
+										name="width"
+										as={TextField}
+										label="Width"
+										fullWidth
+										error={touched.width && Boolean(errors.width)}
+										helperText={touched.width && errors.width}
 									/>
 								</Grid>
 
