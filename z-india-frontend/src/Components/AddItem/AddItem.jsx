@@ -30,6 +30,7 @@ import {
 } from "@mui/material";
 const PropertySchema = Yup.object().shape({
 	project_name: Yup.string().required("Project name is required"),
+	sub_heading: Yup.string().required("Sub Heading is required"),
 	area: Yup.string().required("Area is required"),
 	city: Yup.string().required("City is required"),
 	posted_on: Yup.date().required("Posted on is required"),
@@ -66,6 +67,7 @@ const AddItem = () => {
 	const [images, setImages] = useState(null);
 	const [formData, setFormData] = useState({
 		project_name: "",
+		sub_heading: "",
 		area: "",
 		city: "",
 		posted_on: "",
@@ -111,6 +113,7 @@ const AddItem = () => {
 			// Pre-populate the form with project data
 			setFormData({
 				project_name: project.project_name || "",
+				sub_heading: project.sub_heading || "",
 				area: project.area || "",
 				city: project.city || "",
 				posted_on: project.posted_on
@@ -277,6 +280,17 @@ const AddItem = () => {
 										fullWidth
 										error={touched.project_name && Boolean(errors.project_name)}
 										helperText={touched.project_name && errors.project_name}
+									/>
+								</Grid>
+								{/* Sub Heading */}
+								<Grid item xs={12}>
+									<Field
+										name="sub_heading"
+										as={TextField}
+										label="Sub Heading"
+										fullWidth
+										error={touched.sub_heading && Boolean(errors.sub_heading)}
+										helperText={touched.sub_heading && errors.sub_heading}
 									/>
 								</Grid>
 
