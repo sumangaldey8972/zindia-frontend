@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
 import { Chip } from "@mui/joy";
+import { dateFormat } from "../../utils/dateFormat.utils";
 
 export default function HeaderSection({ property }) {
+
 	return (
 		<Stack sx={{ mb: 2 }}>
 			<Chip
@@ -22,7 +24,7 @@ export default function HeaderSection({ property }) {
 					{property.project_name} - {property.city}
 				</Typography>
 				<Typography level="h5" fontWeight="600" color="neutral">
-					Posted on [ {property.posted_on} ]
+					Posted on - {dateFormat(property.posted_on)} | {property.status}
 				</Typography>
 			</Stack>
 			<Stack
