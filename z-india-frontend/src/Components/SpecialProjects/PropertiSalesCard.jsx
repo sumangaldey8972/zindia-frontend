@@ -11,6 +11,9 @@ import BedIcon from "@mui/icons-material/Bed";
 import BathtubIcon from "@mui/icons-material/Bathtub";
 import Crop54Icon from "@mui/icons-material/Crop54";
 import { Link } from "react-router-dom";
+import { MdBedroomParent } from "react-icons/md";
+import { IoBed } from "react-icons/io5";
+import { MdBathtub } from "react-icons/md";
 
 export default function PropertyCard({ property }) {
 	const {
@@ -85,6 +88,28 @@ export default function PropertyCard({ property }) {
 					)}
 				</Typography>
 				<Typography level="body-sm">Address: {full_address}</Typography>
+				<Box
+					sx={{
+						display: "flex",
+						alignItems: "center",
+						gap: 2,
+						justifyContent: "space-around",
+					}}
+				>
+					<Typography level="body-sm">
+						<IoBed />
+						{configuration.map(
+							(config, index) =>
+								`${config.bedrooms}${
+									index < configuration.length - 1 ? "/" : ""
+								}`
+						)}
+					</Typography>
+					<Typography>
+						<MdBathtub />
+					</Typography>
+					<Typography level="body-sm">Area: {area}</Typography>
+				</Box>
 			</CardContent>
 
 			<CardOverflow>

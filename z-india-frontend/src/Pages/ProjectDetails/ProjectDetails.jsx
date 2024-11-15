@@ -425,7 +425,7 @@ const ProjectDetails = () => {
 						<Divider sx={{ mt: "2rem" }} />
 					</Container>
 
-					<GoogleMapIntegration />
+					<GoogleMapIntegration iframeUrl={property.iframe_url} />
 
 					{/* <Container
 						maxWidth="lg"
@@ -539,7 +539,7 @@ const ProjectDetails = () => {
 						</Box>
 					</Container>
 
-					<Container maxWidth="lg" sx={{ padding: 2, mt: "3rem" }}>
+					<Container maxWidth="lg" sx={{ padding: 2, mt: "3rem" }}> 
 						<Box>
 							<Typography level="title-lg" color="neutral">
 								About Property
