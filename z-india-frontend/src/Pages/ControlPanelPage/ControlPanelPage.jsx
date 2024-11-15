@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ControlPanel from "../../Components/ControlPanel/ControlPanel";
 import axios from "axios";
 import { base_url } from "../../apiConfig/api";
+import ControPannelVTwo from "../../Components/ControlPanel/ControPannelVTwo";
 
 const ControlPanelPage = () => {
 	const navigate = useNavigate();
@@ -39,7 +40,8 @@ const ControlPanelPage = () => {
 					Logout
 				</Button>
 			</Box>
-			<ControlPanel />
+			{/* <ControlPanel /> */}
+			<ControPannelVTwo />
 		</>
 	);
 };

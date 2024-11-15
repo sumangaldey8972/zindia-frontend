@@ -8,6 +8,7 @@ import AddItem from "../Components/AddItem/AddItem";
 import PrivateRoute from "./PrivateRoute"; // Your PrivateRoute component
 import ControlPanelPage from "../Pages/ControlPanelPage/ControlPanelPage";
 import ServicesPage from "../Pages/ServicesPage/ServicesPage";
+import ControPannelVTwo from "../Components/ControlPanel/ControPannelVTwo";
 
 const AllRoutes = () => {
 	return (
