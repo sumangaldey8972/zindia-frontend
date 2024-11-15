@@ -18,6 +18,7 @@ import { MdBathtub } from "react-icons/md";
 export default function PropertyCard({ property }) {
 	const {
 		project_name,
+		sub_heading,
 		area,
 		city,
 		posted_on,
@@ -59,6 +60,7 @@ export default function PropertyCard({ property }) {
 				</AspectRatio>
 			</CardOverflow>
 			<CardContent sx={{ padding: 1 }}>
+				<Typography level="body-xs">{sub_heading}</Typography>
 				<Typography
 					level="h5"
 					color="neutral"
