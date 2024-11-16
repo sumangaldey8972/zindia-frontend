@@ -127,7 +127,7 @@ export default function LoginVTwo() {
 							px: 2,
 						}}
 					>
-						<Box
+						{/* <Box
 							component="header"
 							sx={{ py: 3, display: "flex", justifyContent: "space-between" }}
 						>
@@ -149,7 +149,7 @@ export default function LoginVTwo() {
 									Z-INDIA REALTY
 								</Typography>
 							</Box>
-						</Box>
+						</Box> */}
 						<Box
 							component="main"
 							sx={{

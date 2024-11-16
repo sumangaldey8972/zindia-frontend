@@ -47,30 +47,38 @@ import inside_2 from "../../Assets/inside_2.jpg";
 import inside_3 from "../../Assets/inside_3.jpg";
 import { dateFormat } from "../../utils/dateFormat.utils";
 import EnquireModal from "../../Common/Modal/EnquireModal";
+import {
+	FaHospital,
+	FaSchool,
+	FaShoppingCart,
+	FaSubway,
+	FaTrain,
+} from "react-icons/fa";
 
 const ProjectDetails = () => {
 	// Scroll to top on component mount
 	const location = useLocation();
 	const { property } = location.state;
 	const images = [];
-	const [open, setOpen] = useState(false)
+	const [open, setOpen] = useState(false);
 
 	const [flat_name, set_flat_name] = useState("");
+
+	const iconMapping = {
+		airport: <AirlinesIcon />,
+		metro: <FaSubway />,
+		school: <FaSchool />,
+		shopping_cart: <FaShoppingCart />,
+		hospital: <FaHospital />,
+		railway_station: <FaTrain />,
+	};
 
 	useEffect(() => {
 		set_flat_name(window.location.href.split("/")[3]);
 	}, [window.location.href]);
 
 	const [showMore, setShowMore] = useState(false);
-
-	const description = `
-    Welcome to your future home, located in the heart of Laketown, a prime residential area known for its excellent connectivity and thriving community. 
-    This under-construction residential building offers spacious 2BHK and 3BHK apartments designed to provide modern comfort and convenience.
-    With a total of 8 floors, each apartment comes with easy access to a lift and dedicated parking, ensuring a hassle-free living experience.
-    The property is ideally situated just 6 km from major landmarks like Dumdum Metro, Belgachia Metro, and Netaji Subhas Chandra Bose International Airport.
-    For those working or studying in Bidhannagar, it'  only a short commute away. Experience the perfect blend of accessibility and tranquility in this upcoming residential complex.
-    Surrounded by essential amenities and well-connected transport hubs, it’s the ideal choice for families or individuals.
-    `;
+	const description = property?.about_propoerty || "No description available.";
 
 	const lines = description.split("\n").filter(Boolean);
 	const visibleLines = lines.slice(0, 2).join("\n");
@@ -407,7 +415,6 @@ const ProjectDetails = () => {
 										<Box
 											sx={{
 												display: "flex",
-												alignItems: "flex-end",
 												flexDirection: "column",
 											}}
 										>
@@ -417,11 +424,29 @@ const ProjectDetails = () => {
 												fontWeight="400"
 												startDecorator={<StorefrontIcon />}
 											>
-												Near by places
+												Nearby Places
 											</Typography>
-											<Typography level="body-md" fontWeight="600">
-												Jaya Cinema Hall
-											</Typography>
+											<Box
+												sx={{
+													display: "flex",
+													justifyContent: "space-between",
+												}}
+											>
+												{property.places_nearby.map((place) => (
+													<Box
+														key={place._id}
+														sx={{
+															display: "flex",
+															alignItems: "center",
+															gap: "0.5rem",
+															cursor: "pointer",
+														}}
+														title={place.label} // This will show the label on hover
+													>
+														{iconMapping[place.icon] || <StorefrontIcon />}
+													</Box>
+												))}
+											</Box>
 										</Box>
 									</Stack>
 								</Box>
@@ -431,6 +456,120 @@ const ProjectDetails = () => {
 					</Container>
 
 					<GoogleMapIntegration iframeUrl={property.iframe_url} />
+					<Container
+						maxWidth="lg"
+						sx={{
+							padding: 2,
+							mt: "3rem",
+							border: "2px solid #ffe9de",
+							borderRadius: ".8rem",
+						}}
+					>
+						<Box>
+							<Stack
+								sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}
+							>
+								<Box>
+									<img
+										src="https://static.99acres.com/universalapp/img/landmarkGroup.png"
+										alt=""
+									/>
+								</Box>
+								<Box>
+									<Typography level="h3" fontWeight="600">
+										Places Nearby
+									</Typography>
+
+									<Typography level="body-md" color="neutral">
+										{property.area} {property.city}
+									</Typography>
+								</Box>
+							</Stack>
+						</Box>
+
+						<Box>
+							<Stack
+								gap={2}
+								mt={2}
+								sx={{
+									flexDirection: { sm: "column", md: "row" },
+									alignItems: "flex-start",
+								}}
+							>
+								{property.places_nearby.map((place) => (
+									<Box
+										key={place._id}
+										sx={{
+											border: "2px solid  #ffd7c1",
+											padding: ".7rem",
+											borderRadius: ".7rem",
+										}}
+									>
+										<Typography
+											startDecorator={
+												place.icon === "airport" ? (
+													<AirlinesIcon />
+												) : place.icon === "metro" ? (
+													<DirectionsTransitIcon />
+												) : place.icon === "school" ? (
+													<FaSchool />
+												) : place.icon === "shopping_cart" ? (
+													<FaShoppingCart />
+												) : place.icon === "hospital" ? (
+													<FaHospital />
+												) : place.icon === "railway_station" ? (
+													<FaTrain />
+												) : (
+													<MapIcon />
+												)
+											}
+											level="body-lg"
+											color="neutral"
+											fontWeight="600"
+										>
+											{place.label}
+										</Typography>
+									</Box>
+								))}
+							</Stack>
+						</Box>
+					</Container>
+
+					<Container maxWidth="lg" sx={{ padding: 2, mt: "3rem" }}>
+						<Box>
+							<Typography level="title-lg" color="neutral">
+								About Property
+							</Typography>
+							<Typography level="body-md" color="neutral">
+								{property.full_address}
+							</Typography>
+							<Box>
+								<Typography
+									variant="body1"
+									style={{ whiteSpace: "pre-line", display: "inline" }}
+								>
+									{showMore ? description : visibleLines}
+								</Typography>
+
+								{lines.length > 3 && (
+									<Button
+										variant="text"
+										onClick={() => setShowMore(!showMore)}
+										sx={{
+											display: "inline",
+											padding: 0,
+											minWidth: "auto",
+											marginLeft: "5px",
+											verticalAlign: "baseline",
+											textTransform: "none",
+										}}
+									>
+										{showMore ? "Show Less" : "more.."}
+									</Button>
+								)}
+							</Box>
+						</Box>
+					</Container>
 
 					{/* <Container
 						maxWidth="lg"
