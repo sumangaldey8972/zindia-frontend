@@ -1,21 +1,21 @@
-import * as React from 'react';
-import AspectRatio from '@mui/joy/AspectRatio';
-import Button from '@mui/joy/Button';
-import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import CardOverflow from '@mui/joy/CardOverflow';
-import Chip from '@mui/joy/Chip';
-import Typography from '@mui/joy/Typography';
-import { Box } from '@mui/joy';
-import BedIcon from '@mui/icons-material/Bed';
-import BathtubIcon from '@mui/icons-material/Bathtub';
-import Crop54Icon from '@mui/icons-material/Crop54';
-import susmita_apartment from "../../Assets/Main_photo.jpeg"
-import { Link } from 'react-router-dom'
-import { dateFormat } from '../../utils/dateFormat.utils';
+import * as React from "react";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Button from "@mui/joy/Button";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import CardOverflow from "@mui/joy/CardOverflow";
+import Chip from "@mui/joy/Chip";
+import Typography from "@mui/joy/Typography";
+import { Box } from "@mui/joy";
+import BedIcon from "@mui/icons-material/Bed";
+import BathtubIcon from "@mui/icons-material/Bathtub";
+import Crop54Icon from "@mui/icons-material/Crop54";
+import susmita_apartment from "../../Assets/Main_photo.jpeg";
+import { Link } from "react-router-dom";
+import { dateFormat } from "../../utils/dateFormat.utils";
 
 export default function PropertyCard({ property }) {
-	console.log('property card', property)
+	console.log("property card", property);
 
 	const {
 		project_name,
@@ -27,15 +27,22 @@ export default function PropertyCard({ property }) {
 		full_address,
 		length,
 		width,
-		images
-	} = property
+		images,
+	} = property;
 
 	const propertyImage = images?.[0]
 		? `data:${images[0].mimeType};base64,${images[0].data}`
 		: require("../../Assets/Main_photo.jpeg");
 
 	return (
-		<Card sx={{ width: { xs: 350, md: 520 }, maxWidth: '100%', boxShadow: 'lg', margin: '2rem auto', }}>
+		<Card
+			sx={{
+				width: { xs: 350, md: 520 },
+				maxWidth: "100%",
+				boxShadow: "lg",
+				margin: "2rem auto",
+			}}
+		>
 			<CardOverflow>
 				<AspectRatio sx={{ minWidth: 200 }}>
 					<img
@@ -50,19 +57,19 @@ export default function PropertyCard({ property }) {
 				<Typography level="body-xs">{sub_heading}</Typography>
 				<Typography
 					// href="#product-card"
-					level='h3'
+					level="h3"
 					color="neutral"
 					textColor="text.primary"
 					overlay
 					// endDecorator={<ArrowOutwardIcon />}
-					sx={{ fontWeight: 'md', color: '#00215b' }}
+					sx={{ fontWeight: "md", color: "#00215b" }}
 				>
 					{project_name} in {area}, {city}
 				</Typography>
 
 				<Typography
 					level="body-md"
-					sx={{ mt: 1, fontWeight: 'xl' }}
+					sx={{ mt: 1, fontWeight: "xl" }}
 					endDecorator={
 						<Chip component="span" size="sm" variant="soft" color="success">
 							attractive price
@@ -72,40 +79,34 @@ export default function PropertyCard({ property }) {
 					Added : {dateFormat(posted_on)}
 				</Typography>
 
-				<Typography
-					level="body-md"
-					sx={{ fontWeight: 'xl' }}
+				<Typography level="body-md" sx={{ fontWeight: "xl" }}>
+					{configuration.map((prop) => `${prop.bedrooms}bhk`).join(" , ")}
+				</Typography>
+
+				<Typography level="body-lg">Address : {full_address}</Typography>
+
+				<Box
+					sx={{
+						display: "flex",
+						// border:'1px solid orange',
+						gap: 4,
+					}}
 				>
-
-					{configuration.map((prop) => `${prop.bedrooms}bhk`).join(' , ')}
-				</Typography>
-
-				<Typography level="body-lg"  >
-					Address : {full_address}
-				</Typography>
-
-				<Box sx={{
-					display: 'flex',
-					// border:'1px solid orange',
-					gap: 4
-				}} >
 					<Box>
 						<Typography>Bedrooms</Typography>
-						<Typography startDecorator={<BedIcon />} >
-							{configuration.map((prop) => prop.bedrooms).join('/')}
+						<Typography startDecorator={<BedIcon />}>
+							{configuration.map((prop) => prop.bedrooms).join("/")}
 						</Typography>
 					</Box>
 
 					<Box>
 						<Typography>Bathrooms</Typography>
-						<Typography startDecorator={<BathtubIcon />} >
-							2
-						</Typography>
+						<Typography startDecorator={<BathtubIcon />}>2</Typography>
 					</Box>
 
 					<Box>
 						<Typography>Area</Typography>
-						<Typography startDecorator={<Crop54Icon />} >
+						<Typography startDecorator={<Crop54Icon />}>
 							{length} sqft, {width} sqft
 						</Typography>
 					</Box>
@@ -114,7 +115,7 @@ export default function PropertyCard({ property }) {
 			<CardOverflow>
 				<Button
 					component={Link}
-					to="/:name"
+					to={`/${property.project_name}`}
 					state={{ property }}
 					variant="solid"
 					sx={{
