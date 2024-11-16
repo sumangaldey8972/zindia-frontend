@@ -4,20 +4,13 @@ import GlobalStyles from "@mui/joy/GlobalStyles";
 import CssBaseline from "@mui/joy/CssBaseline";
 import Box from "@mui/joy/Box";
 import Button from "@mui/joy/Button";
-import Checkbox from "@mui/joy/Checkbox";
 import Divider from "@mui/joy/Divider";
 import FormControl from "@mui/joy/FormControl";
 import FormLabel from "@mui/joy/FormLabel";
-import IconButton, { IconButtonProps } from "@mui/joy/IconButton";
 import Link from "@mui/joy/Link";
 import Input from "@mui/joy/Input";
 import Typography from "@mui/joy/Typography";
 import Stack from "@mui/joy/Stack";
-import DarkModeRoundedIcon from "@mui/icons-material/DarkModeRounded";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
-import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
-// import GoogleIcon from './GoogleIcon';
-import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 import { useNavigate } from "react-router-dom";
 import main_photo from "../../Assets/Main_photo.jpeg";
 import { base_url } from "../../apiConfig/api";
@@ -27,6 +20,7 @@ import Snackbars from "../../Common/ToastMessage/ToastMessage";
 const customTheme = extendTheme({ defaultColorScheme: "dark" });
 
 export default function LoginVTwo() {
+	const [loading, setLoading] = useState(false)
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [toastMessage, setToastMessage] = React.useState({
@@ -52,6 +46,7 @@ export default function LoginVTwo() {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setLoading(true)
 		try {
 			const response = await axios.post(
 				`${base_url}/auth/sign-in`,
@@ -66,6 +61,7 @@ export default function LoginVTwo() {
 			console.log("API Response:", response.data);
 			const token = JSON.stringify(response.data.user);
 			localStorage.setItem("authToken", token);
+			setLoading(false)
 			setToastMessage({
 				bool: response.data.status,
 				message: response.data.message,
@@ -81,8 +77,18 @@ export default function LoginVTwo() {
 					status: "error",
 				});
 			}
+			setLoading(false)
 		}
 	};
+
+
+	const handleShowMessage = () => {
+		setToastMessage({
+			bool: true,
+			message: 'Upcoming feature! sit back',
+			status: "warning"
+		})
+	}
 
 	return (
 		<>
@@ -233,6 +239,7 @@ export default function LoginVTwo() {
 												level="title-sm"
 												sx={{ color: "#f45906" }}
 												href="#replace-with-a-link"
+												onClick={handleShowMessage}
 											>
 												Forgot your password?
 											</Link>
@@ -241,6 +248,7 @@ export default function LoginVTwo() {
 											sx={{ backgroundColor: "#01215c" }}
 											type="submit"
 											fullWidth
+											loading={loading}
 										>
 											Sign in
 										</Button>

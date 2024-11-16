@@ -23,11 +23,12 @@ import {
 	Typography,
 	Button,
 	MenuItem,
-	Select,
-	FormControl,
+	// Select,
+	// FormControl,
 	InputLabel,
 	FormHelperText,
 } from "@mui/material";
+import { FormControl, FormLabel, Input, Option, Select } from "@mui/joy";
 const PropertySchema = Yup.object().shape({
 	project_name: Yup.string().required("Project name is required"),
 	sub_heading: Yup.string().required("Sub Heading is required"),
@@ -281,12 +282,14 @@ const AddItem = () => {
 								<Grid item xs={12}>
 									<Field
 										name="project_name"
-										as={TextField}
+										as={Input}
 										label="Project Name"
 										fullWidth
 										error={touched.project_name && Boolean(errors.project_name)}
-										helperText={touched.project_name && errors.project_name}
+										placeholder="Enter project name"
+									// helperText={touched.project_name && errors.project_name}
 									/>
+									<FormHelperText style={{ color: 'red' }} > {touched.project_name && errors.project_name} </FormHelperText>
 								</Grid>
 								{/* Sub Heading */}
 								<Grid item xs={12}>
@@ -485,7 +488,46 @@ const AddItem = () => {
 														>
 															<Grid item xs={5}>
 																{/* Icon Dropdown */}
+
 																<FormControl
+																	fullWidth
+																	error={
+																		touched.places_nearby?.[index]?.icon &&
+																		Boolean(errors.places_nearby?.[index]?.icon)
+																	}>
+																	<FormLabel>Select icons</FormLabel>
+																	<Select
+																		placeholder="Select a pet"
+																		required
+																		sx={{ minWidth: 200 }}
+																		label="Icon"
+																		value={place.icon || ""}
+																		onChange={(e, newValue) => {
+																			console.log('check icon', newValue)
+																			arrayHelpers.replace(index, {
+																				...place,
+																				icon: newValue,
+																			})
+																		}}
+																	>
+																		{
+																			iconOptions.map((icon) => (
+																				<Option
+																					key={icon.value}
+																					value={icon.value}
+																				>
+																					{icon.icon} {icon.label}
+																				</Option>
+																			))
+																		}
+																	</Select>
+																	<FormHelperText>
+																		{touched.places_nearby?.[index]?.icon &&
+																			errors.places_nearby?.[index]?.icon}
+																	</FormHelperText>
+																</FormControl>
+
+																{/* <FormControl
 																	fullWidth
 																	error={
 																		touched.places_nearby?.[index]?.icon &&
@@ -523,7 +565,7 @@ const AddItem = () => {
 																		{touched.places_nearby?.[index]?.icon &&
 																			errors.places_nearby?.[index]?.icon}
 																	</FormHelperText>
-																</FormControl>
+																</FormControl> */}
 															</Grid>
 															<Grid item xs={5}>
 																<Field
