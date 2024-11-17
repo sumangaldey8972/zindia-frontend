@@ -22,14 +22,20 @@ import {
 	TextField,
 	Grid,
 	Typography,
-	Button,
 	MenuItem,
 	// Select,
 	// FormControl,
 	InputLabel,
 	FormHelperText,
 } from "@mui/material";
-import { FormControl, FormLabel, Input, Option, Select } from "@mui/joy";
+import {
+	FormControl,
+	FormLabel,
+	Input,
+	Option,
+	Select,
+	Button,
+} from "@mui/joy";
 const PropertySchema = Yup.object().shape({
 	project_name: Yup.string().required("Project name is required"),
 	sub_heading: Yup.string().required("Sub Heading is required"),
@@ -65,6 +71,7 @@ const PropertySchema = Yup.object().shape({
 });
 
 const AddItem = () => {
+	const [loading, setLoading] = useState(false);
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [imagePreviews, setImagePreviews] = useState([]);
@@ -205,6 +212,7 @@ const AddItem = () => {
 	};
 
 	const handleFormValue = async (values, isEdit) => {
+		setLoading(true);
 		console.log(values);
 		const formData = convertToFormData(values);
 		for (let [key, value] of formData.entries()) {
@@ -224,6 +232,7 @@ const AddItem = () => {
 					}
 				);
 				console.log(response);
+				setLoading(false);
 				navigate("/control-panel");
 			} catch (err) {
 				console.log(err);
@@ -237,6 +246,7 @@ const AddItem = () => {
 					withCredentials: true,
 				});
 				console.log(response);
+				setLoading(false);
 				navigate("/control-panel");
 			} catch (err) {
 				console.log(err);
@@ -826,7 +836,11 @@ const AddItem = () => {
 							</Grid>
 
 							<Stack direction="row" spacing={2} mt={3}>
-								<Button type="submit" variant="contained" color="primary">
+								<Button
+									type="submit"
+									sx={{ backgroundColor: "#01215c" }}
+									loading={loading}
+								>
 									Submit
 								</Button>
 								<Button type="reset" variant="outlined">
