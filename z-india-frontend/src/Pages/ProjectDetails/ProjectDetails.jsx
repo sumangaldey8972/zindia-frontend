@@ -59,6 +59,7 @@ const ProjectDetails = () => {
 	// Scroll to top on component mount
 	const location = useLocation();
 	const { property } = location.state;
+	console.log(property);
 	const images = [];
 	const [open, setOpen] = useState(false);
 
