@@ -13,6 +13,7 @@ import {
 	FaSchool,
 	FaShoppingCart,
 	FaTrain,
+	FaTrash,
 } from "react-icons/fa"; // Import icons from react-icons
 import { FaTrainSubway } from "react-icons/fa6";
 import {
@@ -259,7 +260,7 @@ const AddItem = () => {
 					Logout
 				</Button>
 			</Box>
-			<Box sx={{ maxWidth: 600, margin: "auto", padding: 2 }}>
+			<Box sx={{ maxWidth: 1000, margin: "auto", padding: 2 }}>
 				<center>
 					<p>
 						{location.state?.project ? "Edit Property" : "Add New Property"}
@@ -279,7 +280,7 @@ const AddItem = () => {
 						<Form>
 							<Grid container spacing={2}>
 								{/* Project Name */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="project_name"
 										as={Input}
@@ -287,346 +288,82 @@ const AddItem = () => {
 										fullWidth
 										error={touched.project_name && Boolean(errors.project_name)}
 										placeholder="Enter project name"
-									// helperText={touched.project_name && errors.project_name}
+										// helperText={touched.project_name && errors.project_name}
 									/>
-									<FormHelperText style={{ color: 'red' }} > {touched.project_name && errors.project_name} </FormHelperText>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.project_name && errors.project_name}
+									</FormHelperText>
 								</Grid>
 								{/* Sub Heading */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="sub_heading"
-										as={TextField}
+										as={Input}
 										label="Sub Heading"
 										fullWidth
 										error={touched.sub_heading && Boolean(errors.sub_heading)}
-										helperText={touched.sub_heading && errors.sub_heading}
+										placeholder="Enter Sub Heading"
+										// helperText={touched.sub_heading && errors.sub_heading}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.sub_heading && errors.sub_heading}
+									</FormHelperText>
 								</Grid>
 
 								{/* Area */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="area"
-										as={TextField}
+										as={Input}
 										label="Area"
 										fullWidth
 										error={touched.area && Boolean(errors.area)}
-										helperText={touched.area && errors.area}
+										// helperText={touched.area && errors.area}
+										placeholder="Enter Area Name"
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.area && errors.area}
+									</FormHelperText>
 								</Grid>
 
 								{/* City */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="city"
-										as={TextField}
+										as={Input}
 										label="City"
 										fullWidth
 										error={touched.city && Boolean(errors.city)}
-										helperText={touched.city && errors.city}
+										placeholder="Enter City"
+										// helperText={touched.city && errors.city}
 									/>
-								</Grid>
-
-								{/* Posted On */}
-								<Grid item xs={12}>
-									<Field
-										name="posted_on"
-										as={TextField}
-										label="Posted On"
-										type="date"
-										fullWidth
-										InputLabelProps={{ shrink: true }}
-										error={touched.posted_on && Boolean(errors.posted_on)}
-										helperText={touched.posted_on && errors.posted_on}
-									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.city && errors.city}
+									</FormHelperText>
 								</Grid>
 
 								{/* Status */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="status"
-										as={TextField}
+										as={Input}
 										label="Status"
 										fullWidth
 										error={touched.status && Boolean(errors.status)}
 										helperText={touched.status && errors.status}
+										placeholder="Enter Status"
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.status && errors.status}
+									</FormHelperText>
 								</Grid>
 
-								{/* Configuration */}
-								<Box
-									sx={{
-										marginLeft: 2,
-										paddingTop: 2,
-										width: "98%",
-									}}
-								>
-									<Typography sx={{ marginBottom: 1 }}>
-										Configurations
-									</Typography>
-									<FieldArray
-										name="configuration"
-										render={(arrayHelpers) => (
-											<>
-												{values.configuration &&
-													values.configuration.length > 0 ? (
-													values.configuration.map((config, index) => (
-														<Grid
-															container
-															spacing={2}
-															key={index}
-															sx={{ marginTop: 1 }}
-														>
-															<Grid item xs={5}>
-																<Field
-																	type="number"
-																	name={`configuration[${index}].bedrooms`}
-																	as={TextField}
-																	label="Bedrooms"
-																	value={
-																		config?.bedrooms === undefined
-																			? ""
-																			: config?.bedrooms
-																	} // Set empty string if undefined
-																	fullWidth
-																	error={
-																		touched.configuration?.[index]?.bedrooms &&
-																		Boolean(
-																			errors.configuration?.[index]?.bedrooms
-																		)
-																	}
-																	helperText={
-																		touched.configuration?.[index]?.bedrooms &&
-																		errors.configuration?.[index]?.bedrooms
-																	}
-																/>
-															</Grid>
-															<Grid item xs={5}>
-																<Field
-																	type="number"
-																	name={`configuration[${index}].balcony`}
-																	as={TextField}
-																	label="Balcony"
-																	fullWidth
-																	value={
-																		config?.balcony === undefined
-																			? ""
-																			: config?.balcony
-																	} // Set empty string if undefined
-																	error={
-																		touched.configuration?.[index]?.balcony &&
-																		Boolean(
-																			errors.configuration?.[index]?.balcony
-																		)
-																	}
-																	helperText={
-																		touched.configuration?.[index]?.balcony &&
-																		errors.configuration?.[index]?.balcony
-																	}
-																/>
-															</Grid>
-
-															{/* Button to remove the configuration */}
-															<Grid item xs={2}>
-																<Button
-																	variant="outlined"
-																	color="error"
-																	onClick={() => arrayHelpers.remove(index)}
-																>
-																	Delete
-																</Button>
-															</Grid>
-														</Grid>
-													))
-												) : (
-													<Typography>No configurations added yet.</Typography>
-												)}
-
-												{/* Button to add new configuration */}
-												<Grid item xs={12} mt={2}>
-													<Button
-														variant="outlined"
-														color="primary"
-														onClick={() =>
-															arrayHelpers.push({
-																bedrooms: 0,
-																balcony: 0,
-															})
-														}
-													>
-														Add More Configuration
-													</Button>
-												</Grid>
-											</>
-										)}
-									/>
-								</Box>
-
-								{/* Places Nearby */}
-								<Box
-									sx={{
-										marginLeft: 2,
-										paddingTop: 2,
-										width: "98%",
-									}}
-								>
-									<Typography sx={{ marginBottom: 1 }}>
-										Places Nearby
-									</Typography>
-									<FieldArray
-										name="places_nearby"
-										render={(arrayHelpers) => (
-											<>
-												{values.places_nearby &&
-													values.places_nearby.length > 0 ? (
-													values.places_nearby.map((place, index) => (
-														<Grid
-															container
-															spacing={2}
-															key={index}
-															sx={{ marginTop: 1 }}
-														>
-															<Grid item xs={5}>
-																{/* Icon Dropdown */}
-
-																<FormControl
-																	fullWidth
-																	error={
-																		touched.places_nearby?.[index]?.icon &&
-																		Boolean(errors.places_nearby?.[index]?.icon)
-																	}>
-																	<FormLabel>Select icons</FormLabel>
-																	<Select
-																		placeholder="Select a pet"
-																		required
-																		sx={{ minWidth: 200 }}
-																		label="Icon"
-																		value={place.icon || ""}
-																		onChange={(e, newValue) => {
-																			console.log('check icon', newValue)
-																			arrayHelpers.replace(index, {
-																				...place,
-																				icon: newValue,
-																			})
-																		}}
-																	>
-																		{
-																			iconOptions.map((icon) => (
-																				<Option
-																					key={icon.value}
-																					value={icon.value}
-																				>
-																					{icon.icon} {icon.label}
-																				</Option>
-																			))
-																		}
-																	</Select>
-																	<FormHelperText>
-																		{touched.places_nearby?.[index]?.icon &&
-																			errors.places_nearby?.[index]?.icon}
-																	</FormHelperText>
-																</FormControl>
-
-																{/* <FormControl
-																	fullWidth
-																	error={
-																		touched.places_nearby?.[index]?.icon &&
-																		Boolean(errors.places_nearby?.[index]?.icon)
-																	}
-																>
-																	<InputLabel>Icon</InputLabel>
-																	<Select
-																		label="Icon"
-																		value={place.icon || ""}
-																		onChange={(e) =>
-																			arrayHelpers.replace(index, {
-																				...place,
-																				icon: e.target.value,
-																			})
-																		}
-																	>
-																		{iconOptions.map((icon) => (
-																			<MenuItem
-																				key={icon.value}
-																				value={icon.value}
-																			>
-																				<Grid
-																					container
-																					alignItems="center"
-																					spacing={1}
-																				>
-																					<Grid item>{icon.icon}</Grid>
-																					<Grid item>{icon.label}</Grid>
-																				</Grid>
-																			</MenuItem>
-																		))}
-																	</Select>
-																	<FormHelperText>
-																		{touched.places_nearby?.[index]?.icon &&
-																			errors.places_nearby?.[index]?.icon}
-																	</FormHelperText>
-																</FormControl> */}
-															</Grid>
-															<Grid item xs={5}>
-																<Field
-																	name={`places_nearby[${index}].label`}
-																	as={TextField}
-																	label="Label"
-																	fullWidth
-																	error={
-																		touched.places_nearby?.[index]?.label &&
-																		Boolean(
-																			errors.places_nearby?.[index]?.label
-																		)
-																	}
-																	helperText={
-																		touched.places_nearby?.[index]?.label &&
-																		errors.places_nearby?.[index]?.label
-																	}
-																/>
-															</Grid>
-
-															{/* Button to remove the place */}
-															<Grid item xs={2}>
-																<Button
-																	variant="outlined"
-																	color="error"
-																	onClick={() => arrayHelpers.remove(index)}
-																>
-																	Delete
-																</Button>
-															</Grid>
-														</Grid>
-													))
-												) : (
-													<Typography>No places added yet.</Typography>
-												)}
-
-												{/* Button to add new place */}
-												<Grid item xs={12} mt={2}>
-													<Button
-														variant="outlined"
-														color="primary"
-														onClick={() =>
-															arrayHelpers.push({
-																icon: "",
-																label: "",
-															})
-														}
-													>
-														Add More Place
-													</Button>
-												</Grid>
-											</>
-										)}
-									/>
-								</Box>
-
 								{/* Full Address */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="full_address"
-										as={TextField}
+										as={Input}
+										placeholder="Enter Full Address"
 										label="Full Address"
 										fullWidth
 										multiline
@@ -634,14 +371,18 @@ const AddItem = () => {
 										error={touched.full_address && Boolean(errors.full_address)}
 										helperText={touched.full_address && errors.full_address}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.full_address && errors.full_address}
+									</FormHelperText>
 								</Grid>
 
 								{/* Number of Floors */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="number_of_floores"
-										as={TextField}
+										as={Input}
 										label="Number of Floors"
+										placeholder="Enter Number of floores"
 										fullWidth
 										error={
 											touched.number_of_floores &&
@@ -651,58 +392,93 @@ const AddItem = () => {
 											touched.number_of_floores && errors.number_of_floores
 										}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.number_of_floores && errors.number_of_floores}
+									</FormHelperText>
 								</Grid>
 								{/* Dimensions */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="length"
-										as={TextField}
+										as={Input}
+										placeholder="Enter Length (in Sqft)"
 										label="Length (in Sqft)"
 										fullWidth
 										error={touched.length && Boolean(errors.length)}
 										helperText={touched.length && errors.length}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.length && errors.length}
+									</FormHelperText>
 								</Grid>
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="width"
-										as={TextField}
+										as={Input}
 										label="Width (in Sqft)"
+										placeholder="Enter Width in (Sqft)"
 										fullWidth
 										error={touched.width && Boolean(errors.width)}
 										helperText={touched.width && errors.width}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.width && errors.width}
+									</FormHelperText>
 								</Grid>
 
 								{/* Facing */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="facing"
-										as={TextField}
+										as={Input}
 										label="Facing"
+										placeholder="Enter Facing"
 										fullWidth
 										error={touched.facing && Boolean(errors.facing)}
 										helperText={touched.facing && errors.facing}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.facing && errors.facing}
+									</FormHelperText>
 								</Grid>
 
 								{/* Overlooking */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="overlooking"
-										as={TextField}
+										as={Input}
 										label="Overlooking"
+										placeholder="Enter Overlooking"
 										fullWidth
 										error={touched.overlooking && Boolean(errors.overlooking)}
 										helperText={touched.overlooking && errors.overlooking}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.overlooking && errors.overlooking}
+									</FormHelperText>
+								</Grid>
+
+								{/* Iframe URL */}
+								<Grid item xs={12} sm={6}>
+									<Field
+										name="iframe_url"
+										as={Input}
+										label="Iframe URL"
+										placeholder="Enter Iframe Url"
+										fullWidth
+										error={touched.iframe_url && Boolean(errors.iframe_url)}
+										helperText={touched.iframe_url && errors.iframe_url}
+									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.iframe_url && errors.iframe_url}
+									</FormHelperText>
 								</Grid>
 
 								{/* Possess In */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="posess_in"
-										as={TextField}
+										as={Input}
 										label="Possess In"
 										type="date"
 										fullWidth
@@ -710,22 +486,30 @@ const AddItem = () => {
 										error={touched.posess_in && Boolean(errors.posess_in)}
 										helperText={touched.posess_in && errors.posess_in}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.posess_in && errors.posess_in}
+									</FormHelperText>
 								</Grid>
 
-								{/* Iframe URL */}
-								<Grid item xs={12}>
+								{/* Posted On */}
+								<Grid item xs={12} sm={6}>
 									<Field
-										name="iframe_url"
-										as={TextField}
-										label="Iframe URL"
+										name="posted_on"
+										as={Input}
+										label="Posted On"
+										type="date"
 										fullWidth
-										error={touched.iframe_url && Boolean(errors.iframe_url)}
-										helperText={touched.iframe_url && errors.iframe_url}
+										InputLabelProps={{ shrink: true }}
+										error={touched.posted_on && Boolean(errors.posted_on)}
+										// helperText={touched.posted_on && errors.posted_on}
 									/>
+									<FormHelperText style={{ color: "red" }}>
+										{touched.posted_on && errors.posted_on}
+									</FormHelperText>
 								</Grid>
 
 								{/* About Property */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Field
 										name="about_propoerty"
 										as={TextField}
@@ -743,7 +527,7 @@ const AddItem = () => {
 								</Grid>
 
 								{/* Images FieldArray */}
-								<Grid item xs={12}>
+								<Grid item xs={12} sm={6}>
 									<Typography variant="h6">Upload Images</Typography>
 									<input
 										type="file"
@@ -767,6 +551,277 @@ const AddItem = () => {
 									{touched.images && errors.images && (
 										<Typography color="error">{errors.images}</Typography>
 									)}
+								</Grid>
+
+								{/* Configuration */}
+								<Grid item xs={12} sm={6}>
+									<Box
+										sx={{
+											width: "100%",
+										}}
+									>
+										<Typography>Configurations</Typography>
+										<FieldArray
+											name="configuration"
+											render={(arrayHelpers) => (
+												<>
+													{values.configuration &&
+													values.configuration.length > 0 ? (
+														values.configuration.map((config, index) => (
+															<Grid container spacing={2} key={index} sx={{}}>
+																<Grid item xs={5}>
+																	<Field
+																		type="number"
+																		name={`configuration[${index}].bedrooms`}
+																		as={Input}
+																		label="Bedrooms"
+																		placeholder="Bedrooms"
+																		value={
+																			config?.bedrooms === undefined
+																				? ""
+																				: config?.bedrooms
+																		} // Set empty string if undefined
+																		fullWidth
+																		error={
+																			touched.configuration?.[index]
+																				?.bedrooms &&
+																			Boolean(
+																				errors.configuration?.[index]?.bedrooms
+																			)
+																		}
+																		helperText={
+																			touched.configuration?.[index]
+																				?.bedrooms &&
+																			errors.configuration?.[index]?.bedrooms
+																		}
+																	/>
+																	<FormHelperText style={{ color: "red" }}>
+																		{touched.configuration?.[index]?.bedrooms &&
+																			errors.configuration?.[index]?.bedrooms}
+																	</FormHelperText>
+																</Grid>
+																<Grid item xs={5}>
+																	<Field
+																		type="number"
+																		name={`configuration[${index}].balcony`}
+																		as={Input}
+																		label="Balcony"
+																		placeholder="Balcony"
+																		fullWidth
+																		value={
+																			config?.balcony === undefined
+																				? ""
+																				: config?.balcony
+																		} // Set empty string if undefined
+																		error={
+																			touched.configuration?.[index]?.balcony &&
+																			Boolean(
+																				errors.configuration?.[index]?.balcony
+																			)
+																		}
+																		helperText={
+																			touched.configuration?.[index]?.balcony &&
+																			errors.configuration?.[index]?.balcony
+																		}
+																	/>
+																	<FormHelperText style={{ color: "red" }}>
+																		{touched.configuration?.[index]?.balcony &&
+																			errors.configuration?.[index]?.balcony}
+																	</FormHelperText>
+																</Grid>
+
+																{/* Button to remove the configuration */}
+																<Grid item xs={2}>
+																	<Button
+																		color="error"
+																		onClick={() => arrayHelpers.remove(index)}
+																	>
+																		<FaTrash />
+																	</Button>
+																</Grid>
+															</Grid>
+														))
+													) : (
+														<Typography>
+															No configurations added yet.
+														</Typography>
+													)}
+
+													{/* Button to add new configuration */}
+													<Grid item xs={12}>
+														<Button
+															variant="outlined"
+															color="primary"
+															onClick={() =>
+																arrayHelpers.push({
+																	bedrooms: 0,
+																	balcony: 0,
+																})
+															}
+														>
+															Add More Configuration
+														</Button>
+													</Grid>
+												</>
+											)}
+										/>
+									</Box>
+								</Grid>
+								{/* Places Nearby */}
+								<Grid item xs={12} sm={6}>
+									<Box
+										sx={{
+											width: "100%",
+										}}
+									>
+										<Typography>Places Nearby</Typography>
+										<FieldArray
+											name="places_nearby"
+											render={(arrayHelpers) => (
+												<>
+													{values.places_nearby &&
+													values.places_nearby.length > 0 ? (
+														values.places_nearby.map((place, index) => (
+															<Grid container spacing={2} key={index}>
+																<Grid item xs={5}>
+																	{/* Icon Dropdown */}
+
+																	<FormControl
+																		fullWidth
+																		error={
+																			touched.places_nearby?.[index]?.icon &&
+																			Boolean(
+																				errors.places_nearby?.[index]?.icon
+																			)
+																		}
+																	>
+																		<Select
+																			placeholder="Select a place"
+																			required
+																			sx={{ minWidth: 200 }}
+																			label="Icon"
+																			value={place.icon || ""}
+																			onChange={(e, newValue) => {
+																				console.log("check icon", newValue);
+																				arrayHelpers.replace(index, {
+																					...place,
+																					icon: newValue,
+																				});
+																			}}
+																		>
+																			{iconOptions.map((icon) => (
+																				<Option
+																					key={icon.value}
+																					value={icon.value}
+																				>
+																					{icon.icon} {icon.label}
+																				</Option>
+																			))}
+																		</Select>
+																		<FormHelperText>
+																			{touched.places_nearby?.[index]?.icon &&
+																				errors.places_nearby?.[index]?.icon}
+																		</FormHelperText>
+																	</FormControl>
+
+																	{/* <FormControl
+																		fullWidth
+																		error={
+																			touched.places_nearby?.[index]?.icon &&
+																			Boolean(errors.places_nearby?.[index]?.icon)
+																		}
+																	>
+																		<InputLabel>Icon</InputLabel>
+																		<Select
+																			label="Icon"
+																			value={place.icon || ""}
+																			onChange={(e) =>
+																				arrayHelpers.replace(index, {
+																					...place,
+																					icon: e.target.value,
+																				})
+																			}
+																		>
+																			{iconOptions.map((icon) => (
+																				<MenuItem
+																					key={icon.value}
+																					value={icon.value}
+																				>
+																					<Grid
+																						container
+																						alignItems="center"
+																						spacing={1}
+																					>
+																						<Grid item>{icon.icon}</Grid>
+																						<Grid item>{icon.label}</Grid>
+																					</Grid>
+																				</MenuItem>
+																			))}
+																		</Select>
+																		<FormHelperText>
+																			{touched.places_nearby?.[index]?.icon &&
+																				errors.places_nearby?.[index]?.icon}
+																		</FormHelperText>
+																	</FormControl> */}
+																</Grid>
+																<Grid item xs={5}>
+																	<Field
+																		name={`places_nearby[${index}].label`}
+																		as={Input}
+																		label="Label"
+																		placeholder="Enter label"
+																		fullWidth
+																		error={
+																			touched.places_nearby?.[index]?.label &&
+																			Boolean(
+																				errors.places_nearby?.[index]?.label
+																			)
+																		}
+																		helperText={
+																			touched.places_nearby?.[index]?.label &&
+																			errors.places_nearby?.[index]?.label
+																		}
+																	/>
+																	<FormHelperText style={{ color: "red" }}>
+																		{touched.places_nearby?.[index]?.label &&
+																			errors.places_nearby?.[index]?.label}
+																	</FormHelperText>
+																</Grid>
+
+																{/* Button to remove the place */}
+																<Grid item xs={2}>
+																	<Button
+																		color="error"
+																		onClick={() => arrayHelpers.remove(index)}
+																	>
+																		<FaTrash />
+																	</Button>
+																</Grid>
+															</Grid>
+														))
+													) : (
+														<Typography>No places added yet.</Typography>
+													)}
+
+													{/* Button to add new place */}
+													<Grid item xs={12}>
+														<Button
+															variant="outlined"
+															color="primary"
+															onClick={() =>
+																arrayHelpers.push({
+																	icon: "",
+																	label: "",
+																})
+															}
+														>
+															Add More Place
+														</Button>
+													</Grid>
+												</>
+											)}
+										/>
+									</Box>
 								</Grid>
 							</Grid>
 
