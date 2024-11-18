@@ -16,6 +16,7 @@ import { base_url } from "../../apiConfig/api";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
+import { CircularProgress } from "@mui/joy";
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) return -1;
@@ -122,58 +123,65 @@ export default function ProjectTabel() {
 							<th style={{ width: 140, padding: "12px 6px" }}>Action</th>
 						</tr>
 					</thead>
-					<tbody>
-						{projects.sort(getComparator(order, "id")).map((project) => (
-							<tr key={project._id}>
-								<td>
-									<Typography level="title-md">
-										{project.project_name}
-									</Typography>
-								</td>
-								<td>
-									<Typography level="title-md">{project.area}</Typography>
-								</td>
-								<td>
-									<Typography level="title-md">{project.city}</Typography>
-								</td>
-								<td>
-									<Typography level="title-md">
-										{project.posess_in
-											? new Date(project.posess_in).toISOString().split("T")[0]
-											: ""}
-									</Typography>
-								</td>
-								<td>
-									<Dropdown>
-										<MenuButton
-											slots={{ root: IconButton }}
-											slotProps={{
-												root: {
-													variant: "plain",
-													color: "neutral",
-													size: "sm",
-												},
-											}}
-										>
-											<MoreHorizRoundedIcon />
-										</MenuButton>
-										<Menu size="md" sx={{ minWidth: 140 }}>
-											<MenuItem onClick={() => handleEdit(project)}>
-												Edit
-											</MenuItem>
-											<Divider />
-											<MenuItem
-												color="danger"
-												onClick={() => handleOpenModal(project)}
-											>
-												Delete
-											</MenuItem>
-										</Menu>
-									</Dropdown>
-								</td>
-							</tr>
-						))}
-					</tbody>
+					{
+						loading ?
+							<Box>
+								<CircularProgress thickness={4} />
+							</Box>
+							: <tbody>
+								{projects.sort(getComparator(order, "id")).map((project) => (
+									<tr key={project._id}>
+										<td>
+											<Typography level="title-md">
+												{project.project_name}
+											</Typography>
+										</td>
+										<td>
+											<Typography level="title-md">{project.area}</Typography>
+										</td>
+										<td>
+											<Typography level="title-md">{project.city}</Typography>
+										</td>
+										<td>
+											<Typography level="title-md">
+												{project.posess_in
+													? new Date(project.posess_in).toISOString().split("T")[0]
+													: ""}
+											</Typography>
+										</td>
+										<td>
+											<Dropdown>
+												<MenuButton
+													slots={{ root: IconButton }}
+													slotProps={{
+														root: {
+															variant: "plain",
+															color: "neutral",
+															size: "sm",
+														},
+													}}
+												>
+													<MoreHorizRoundedIcon />
+												</MenuButton>
+												<Menu size="md" sx={{ minWidth: 140 }}>
+													<MenuItem onClick={() => handleEdit(project)}>
+														Edit
+													</MenuItem>
+													<Divider />
+													<MenuItem
+														color="danger"
+														onClick={() => handleOpenModal(project)}
+													>
+														Delete
+													</MenuItem>
+												</Menu>
+											</Dropdown>
+										</td>
+									</tr>
+								))}
+							</tbody>
+					}
+
 				</Table>
 			</Sheet>
 

@@ -107,7 +107,7 @@ export default function PropertyCard({ property }) {
 					<Box>
 						<Typography>Area</Typography>
 						<Typography startDecorator={<Crop54Icon />}>
-							{length} sqft, {width} sqft
+							{property.configuration.map((config) => `${config.total_size ? config.total_size : "--"} sqft `).join(',')}
 						</Typography>
 					</Box>
 				</Box>

@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Stack, Textarea, Typography } from "@mui/joy";
 import { Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { MaterialInput } from "../../Common/CustomInputs/CustomInputs";
 import Snackbars from "../../Common/ToastMessage/ToastMessage";
@@ -11,6 +11,7 @@ import {
 } from "../../Common/FormFields/FormFields";
 
 const ContactUs = () => {
+	const [loading, setLoading] = useState(false)
 	const [toastMessage, setToastMessage] = React.useState({
 		bool: false,
 		message: "",
@@ -55,11 +56,12 @@ const ContactUs = () => {
 		const templateID = "template_2i8xd3p";
 		const userID = "3bHwUVrymT9E99kz5"; // Public key from EmailJS
 		console.log(details);
-
+		setLoading(true)
 		emailjs
 			.send(serviceID, templateID, details, userID)
 			.then((response) => {
 				console.log("Email successfully sent!", response.status, response.text);
+				setLoading(false)
 				setToastMessage({
 					bool: true,
 					message:
@@ -68,6 +70,7 @@ const ContactUs = () => {
 				});
 			})
 			.catch((err) => {
+				setLoading(true)
 				console.error("Failed to send email.", err);
 				setToastMessage({
 					bool: true,
@@ -131,7 +134,7 @@ const ContactUs = () => {
 								setSubmitting(false);
 							}}
 						>
-							{({}) => {
+							{({ }) => {
 								return (
 									<Form>
 										<Grid
@@ -173,6 +176,7 @@ const ContactUs = () => {
 										</Grid>
 
 										<Button
+											loading={loading}
 											type="submit"
 											sx={{
 												backgroundColor: "#f45905",

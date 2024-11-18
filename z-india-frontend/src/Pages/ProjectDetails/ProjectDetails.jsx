@@ -275,7 +275,7 @@ const ProjectDetails = () => {
 												Area
 											</Typography>
 											<Typography level="body-md" fontWeight="600">
-												{property.area}
+												{property.configuration.map((config) => `${config.total_size}`).join('/')} sqft
 											</Typography>
 										</Box>
 
@@ -416,7 +416,7 @@ const ProjectDetails = () => {
 										<Box
 											sx={{
 												display: "flex",
-												flexDirection: "column",
+												flexDirection: "column"
 											}}
 										>
 											<Typography
@@ -444,7 +444,7 @@ const ProjectDetails = () => {
 														}}
 														title={place.label} // This will show the label on hover
 													>
-														{iconMapping[place.icon] || <StorefrontIcon />}
+														{iconMapping[place.icon] || <StorefrontIcon />} {place.label}
 													</Box>
 												))}
 											</Box>
@@ -482,7 +482,7 @@ const ProjectDetails = () => {
 									</Typography>
 
 									<Typography level="body-md" color="neutral">
-										{property.area} {property.city}
+										{property.area}, {property.city}
 									</Typography>
 								</Box>
 							</Stack>

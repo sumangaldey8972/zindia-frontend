@@ -36,6 +36,10 @@ import {
 	Select,
 	Button,
 } from "@mui/joy";
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+
 const PropertySchema = Yup.object().shape({
 	project_name: Yup.string().required("Project name is required"),
 	sub_heading: Yup.string().required("Sub Heading is required"),
@@ -48,6 +52,7 @@ const PropertySchema = Yup.object().shape({
 		Yup.object().shape({
 			bedrooms: Yup.number().required("Number of bedrooms is required"),
 			balcony: Yup.number().required("Number of balconies is required"),
+			total_size: Yup.number().required("Mention total size")
 		})
 	),
 	places_nearby: Yup.array().of(
@@ -58,8 +63,8 @@ const PropertySchema = Yup.object().shape({
 	),
 	full_address: Yup.string().required("Full address is required"),
 	number_of_floores: Yup.string().required("Number of floores is required"),
-	length: Yup.number().required("Length is required"),
-	width: Yup.number().required("Width is required"),
+	// length: Yup.number().required("Length is required"),
+	// width: Yup.number().required("Width is required"),
 	facing: Yup.string().required("Facing direction is required"),
 	overlooking: Yup.string().required("Overlooking information is required"),
 	posess_in: Yup.date().required("Possession date is required"),
@@ -88,8 +93,8 @@ const AddItem = () => {
 		images: [],
 		full_address: "",
 		number_of_floores: "",
-		length: "",
-		width: "",
+		// length: "",
+		// width: "",
 		facing: "",
 		overlooking: "",
 		posess_in: "",
@@ -137,8 +142,8 @@ const AddItem = () => {
 				images: project.images || [],
 				full_address: project.full_address || "",
 				number_of_floores: project.number_of_floores || "",
-				length: project.length || "",
-				width: project.width || "",
+				// length: project.length || "",
+				// width: project.width || "",
 				facing: project.facing || "",
 				overlooking: project.overlooking || "",
 				posess_in: project.posess_in
@@ -272,9 +277,16 @@ const AddItem = () => {
 			</Box>
 			<Box sx={{ maxWidth: 1000, margin: "auto", padding: 2 }}>
 				<center>
-					<p>
+					{/* <p>
 						{location.state?.project ? "Edit Property" : "Add New Property"}
-					</p>
+					</p> */}
+					<Typography level="h1" sx={{
+						color: "#01215c",
+						fontSize: '1.3rem',
+						fontWeight: '600'
+					}}  >
+						{location.state?.project ? "Edit Property" : "Add New Property"}
+					</Typography>
 				</center>
 				<Formik
 					initialValues={formData}
@@ -298,7 +310,7 @@ const AddItem = () => {
 										fullWidth
 										error={touched.project_name && Boolean(errors.project_name)}
 										placeholder="Enter project name"
-										// helperText={touched.project_name && errors.project_name}
+									// helperText={touched.project_name && errors.project_name}
 									/>
 									<FormHelperText style={{ color: "red" }}>
 										{touched.project_name && errors.project_name}
@@ -313,7 +325,7 @@ const AddItem = () => {
 										fullWidth
 										error={touched.sub_heading && Boolean(errors.sub_heading)}
 										placeholder="Enter Sub Heading"
-										// helperText={touched.sub_heading && errors.sub_heading}
+									// helperText={touched.sub_heading && errors.sub_heading}
 									/>
 									<FormHelperText style={{ color: "red" }}>
 										{touched.sub_heading && errors.sub_heading}
@@ -345,7 +357,7 @@ const AddItem = () => {
 										fullWidth
 										error={touched.city && Boolean(errors.city)}
 										placeholder="Enter City"
-										// helperText={touched.city && errors.city}
+									// helperText={touched.city && errors.city}
 									/>
 									<FormHelperText style={{ color: "red" }}>
 										{touched.city && errors.city}
@@ -407,7 +419,7 @@ const AddItem = () => {
 									</FormHelperText>
 								</Grid>
 								{/* Dimensions */}
-								<Grid item xs={12} sm={6}>
+								{/* <Grid item xs={12} sm={6}>
 									<Field
 										name="length"
 										as={Input}
@@ -434,7 +446,7 @@ const AddItem = () => {
 									<FormHelperText style={{ color: "red" }}>
 										{touched.width && errors.width}
 									</FormHelperText>
-								</Grid>
+								</Grid> */}
 
 								{/* Facing */}
 								<Grid item xs={12} sm={6}>
@@ -511,7 +523,7 @@ const AddItem = () => {
 										fullWidth
 										InputLabelProps={{ shrink: true }}
 										error={touched.posted_on && Boolean(errors.posted_on)}
-										// helperText={touched.posted_on && errors.posted_on}
+									// helperText={touched.posted_on && errors.posted_on}
 									/>
 									<FormHelperText style={{ color: "red" }}>
 										{touched.posted_on && errors.posted_on}
@@ -576,10 +588,10 @@ const AddItem = () => {
 											render={(arrayHelpers) => (
 												<>
 													{values.configuration &&
-													values.configuration.length > 0 ? (
+														values.configuration.length > 0 ? (
 														values.configuration.map((config, index) => (
-															<Grid container spacing={2} key={index} sx={{}}>
-																<Grid item xs={5}>
+															<Grid container spacing={2} key={index} sx={{ alignItems: 'center' }}>
+																<Grid item xs={3}>
 																	<Field
 																		type="number"
 																		name={`configuration[${index}].bedrooms`}
@@ -610,7 +622,7 @@ const AddItem = () => {
 																			errors.configuration?.[index]?.bedrooms}
 																	</FormHelperText>
 																</Grid>
-																<Grid item xs={5}>
+																<Grid item xs={3}>
 																	<Field
 																		type="number"
 																		name={`configuration[${index}].balcony`}
@@ -639,14 +651,44 @@ const AddItem = () => {
 																			errors.configuration?.[index]?.balcony}
 																	</FormHelperText>
 																</Grid>
+																<Grid item xs={4}>
+																	<Field
+																		type="number"
+																		name={`configuration[${index}].total_size`}
+																		as={Input}
+																		label="Total Size"
+																		placeholder="Enter total size"
+																		fullWidth
+																		value={
+																			config?.total_size === undefined
+																				? ""
+																				: config?.total_size
+																		} // Set empty string if undefined
+																		error={
+																			touched.configuration?.[index]?.total_size &&
+																			Boolean(
+																				errors.configuration?.[index]?.total_size
+																			)
+																		}
+																		helperText={
+																			touched.configuration?.[index]?.total_size &&
+																			errors.configuration?.[index]?.total_size
+																		}
+																	/>
+																	<FormHelperText style={{ color: "red" }}>
+																		{touched.configuration?.[index]?.total_size &&
+																			errors.configuration?.[index]?.total_size}
+																	</FormHelperText>
+																</Grid>
 
 																{/* Button to remove the configuration */}
 																<Grid item xs={2}>
 																	<Button
-																		color="error"
+																		size="sm"
+																		color="danger"
 																		onClick={() => arrayHelpers.remove(index)}
 																	>
-																		<FaTrash />
+																		<DeleteIcon />
 																	</Button>
 																</Grid>
 															</Grid>
@@ -668,6 +710,7 @@ const AddItem = () => {
 																	balcony: 0,
 																})
 															}
+															startDecorator={<AddCircleOutlineIcon />}
 														>
 															Add More Configuration
 														</Button>
@@ -690,7 +733,7 @@ const AddItem = () => {
 											render={(arrayHelpers) => (
 												<>
 													{values.places_nearby &&
-													values.places_nearby.length > 0 ? (
+														values.places_nearby.length > 0 ? (
 														values.places_nearby.map((place, index) => (
 															<Grid container spacing={2} key={index}>
 																<Grid item xs={5}>
@@ -801,7 +844,7 @@ const AddItem = () => {
 																{/* Button to remove the place */}
 																<Grid item xs={2}>
 																	<Button
-																		color="error"
+																		color="danger"
 																		onClick={() => arrayHelpers.remove(index)}
 																	>
 																		<FaTrash />
@@ -824,6 +867,7 @@ const AddItem = () => {
 																	label: "",
 																})
 															}
+															startDecorator={<AddCircleOutlineIcon />}
 														>
 															Add More Place
 														</Button>
