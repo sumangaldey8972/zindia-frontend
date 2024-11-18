@@ -40,7 +40,7 @@ export default function NavbarV2() {
 		{ label: "Home", route: "/" },
 		{ label: "About Us", route: "/about-us" },
 		{ label: "Services", route: "/services" },
-		{ label: "Works", route: "" },
+		// { label: "Works", route: "" },
 		{ label: "Testimonials", route: "/testimonals" },
 		{ label: "Login", route: "/login" },
 	];
