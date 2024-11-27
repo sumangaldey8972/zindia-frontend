@@ -36,9 +36,9 @@ import {
 	Select,
 	Button,
 } from "@mui/joy";
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
 const PropertySchema = Yup.object().shape({
 	project_name: Yup.string().required("Project name is required"),
@@ -52,14 +52,14 @@ const PropertySchema = Yup.object().shape({
 		Yup.object().shape({
 			bedrooms: Yup.number().required("Number of bedrooms is required"),
 			balcony: Yup.number().required("Number of balconies is required"),
-			total_size: Yup.number().required("Mention total size")
+			total_size: Yup.number().required("Mention total size"),
 		})
 	),
 	places_nearby: Yup.array().of(
 		Yup.object().shape({
 			icon: Yup.string().required("Icon is required"),
 			label: Yup.string().required("Label is required"),
-			distance: Yup.number().required("distance is required")
+			distance: Yup.number().required("distance is required"),
 		})
 	),
 	full_address: Yup.string().required("Full address is required"),
@@ -167,11 +167,14 @@ const AddItem = () => {
 	const handleLogout = async () => {
 		try {
 			// Make an API call to destroy the session
-			const response = await axios.delete(`${base_url}/session`); // Update with your API endpoint
-			if (response.status === 200) {
-				// Successfully logged out, navigate to login page
-				navigate("/login");
-			}
+			// const response = await axios.delete(`${base_url}/session`); // Update with your API endpoint
+			// if (response.status === 200) {
+			// 	// Successfully logged out, navigate to login page
+			// 	navigate("/login");
+			// }
+			localStorage.removeItem("user");
+			console.log("User logged out successfully!");
+			navigate("/login");
 		} catch (error) {
 			console.error("Logout failed", error);
 			// Handle error (e.g., show an alert or message)
@@ -272,8 +275,8 @@ const AddItem = () => {
 				}}
 			>
 				<Typography variant="h6">Control Panel</Typography>
-				<Button variant="outlined" color="secondary" onClick={handleLogout}>
-					Logout
+				<Button variant="outlined" color="warning" onClick={handleLogout}>
+					LOGOUT
 				</Button>
 			</Box>
 			<Box sx={{ maxWidth: 1000, margin: "auto", padding: 2 }}>
@@ -281,11 +284,14 @@ const AddItem = () => {
 					{/* <p>
 						{location.state?.project ? "Edit Property" : "Add New Property"}
 					</p> */}
-					<Typography level="h1" sx={{
-						color: "#01215c",
-						fontSize: '1.3rem',
-						fontWeight: '600'
-					}}  >
+					<Typography
+						level="h1"
+						sx={{
+							color: "#01215c",
+							fontSize: "1.3rem",
+							fontWeight: "600",
+						}}
+					>
 						{location.state?.project ? "Edit Property" : "Add New Property"}
 					</Typography>
 				</center>
@@ -311,7 +317,7 @@ const AddItem = () => {
 										fullWidth
 										error={touched.project_name && Boolean(errors.project_name)}
 										placeholder="Enter project name"
-									// helperText={touched.project_name && errors.project_name}
+										// helperText={touched.project_name && errors.project_name}
 									/>
 									<FormHelperText style={{ color: "red" }}>
 										{touched.project_name && errors.project_name}
@@ -326,7 +332,7 @@ const AddItem = () => {
 										fullWidth
 										error={touched.sub_heading && Boolean(errors.sub_heading)}
 										placeholder="Enter Sub Heading"
-									// helperText={touched.sub_heading && errors.sub_heading}
+										// helperText={touched.sub_heading && errors.sub_heading}
 									/>
 									<FormHelperText style={{ color: "red" }}>
 										{touched.sub_heading && errors.sub_heading}
@@ -358,7 +364,7 @@ const AddItem = () => {
 										fullWidth
 										error={touched.city && Boolean(errors.city)}
 										placeholder="Enter City"
-									// helperText={touched.city && errors.city}
+										// helperText={touched.city && errors.city}
 									/>
 									<FormHelperText style={{ color: "red" }}>
 										{touched.city && errors.city}
@@ -524,7 +530,7 @@ const AddItem = () => {
 										fullWidth
 										InputLabelProps={{ shrink: true }}
 										error={touched.posted_on && Boolean(errors.posted_on)}
-									// helperText={touched.posted_on && errors.posted_on}
+										// helperText={touched.posted_on && errors.posted_on}
 									/>
 									<FormHelperText style={{ color: "red" }}>
 										{touched.posted_on && errors.posted_on}
@@ -589,9 +595,14 @@ const AddItem = () => {
 											render={(arrayHelpers) => (
 												<>
 													{values.configuration &&
-														values.configuration.length > 0 ? (
+													values.configuration.length > 0 ? (
 														values.configuration.map((config, index) => (
-															<Grid container spacing={2} key={index} sx={{ alignItems: 'center' }}>
+															<Grid
+																container
+																spacing={2}
+																key={index}
+																sx={{ alignItems: "center" }}
+															>
 																<Grid item xs={3}>
 																	<Field
 																		type="number"
@@ -666,18 +677,22 @@ const AddItem = () => {
 																				: config?.total_size
 																		} // Set empty string if undefined
 																		error={
-																			touched.configuration?.[index]?.total_size &&
+																			touched.configuration?.[index]
+																				?.total_size &&
 																			Boolean(
-																				errors.configuration?.[index]?.total_size
+																				errors.configuration?.[index]
+																					?.total_size
 																			)
 																		}
 																		helperText={
-																			touched.configuration?.[index]?.total_size &&
+																			touched.configuration?.[index]
+																				?.total_size &&
 																			errors.configuration?.[index]?.total_size
 																		}
 																	/>
 																	<FormHelperText style={{ color: "red" }}>
-																		{touched.configuration?.[index]?.total_size &&
+																		{touched.configuration?.[index]
+																			?.total_size &&
 																			errors.configuration?.[index]?.total_size}
 																	</FormHelperText>
 																</Grid>
@@ -734,7 +749,7 @@ const AddItem = () => {
 											render={(arrayHelpers) => (
 												<>
 													{values.places_nearby &&
-														values.places_nearby.length > 0 ? (
+													values.places_nearby.length > 0 ? (
 														values.places_nearby.map((place, index) => (
 															<Grid container spacing={2} key={index}>
 																<Grid item xs={4}>
@@ -850,13 +865,15 @@ const AddItem = () => {
 																		placeholder="Enter distance"
 																		fullWidth
 																		error={
-																			touched.places_nearby?.[index]?.distance &&
+																			touched.places_nearby?.[index]
+																				?.distance &&
 																			Boolean(
 																				errors.places_nearby?.[index]?.distance
 																			)
 																		}
 																		helperText={
-																			touched.places_nearby?.[index]?.distance &&
+																			touched.places_nearby?.[index]
+																				?.distance &&
 																			errors.places_nearby?.[index]?.distance
 																		}
 																	/>

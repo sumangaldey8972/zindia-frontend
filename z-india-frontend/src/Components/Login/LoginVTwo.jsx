@@ -20,7 +20,7 @@ import Snackbars from "../../Common/ToastMessage/ToastMessage";
 const customTheme = extendTheme({ defaultColorScheme: "dark" });
 
 export default function LoginVTwo() {
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [toastMessage, setToastMessage] = React.useState({
@@ -46,7 +46,7 @@ export default function LoginVTwo() {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setLoading(true)
+		setLoading(true);
 		try {
 			const response = await axios.post(
 				`${base_url}/auth/sign-in`,
@@ -59,9 +59,15 @@ export default function LoginVTwo() {
 				}
 			);
 			console.log("API Response:", response.data);
-			const token = JSON.stringify(response.data.user);
-			localStorage.setItem("authToken", token);
-			setLoading(false)
+			const userData = {
+				id: response.data.user._id,
+				firstName: response.data.user.first_name,
+				lastName: response.data.user.last_name,
+				email: response.data.user.email_address,
+			};
+			//save data to localStorage
+			localStorage.setItem("user", JSON.stringify(userData));
+			setLoading(false);
 			setToastMessage({
 				bool: response.data.status,
 				message: response.data.message,
@@ -77,18 +83,17 @@ export default function LoginVTwo() {
 					status: "error",
 				});
 			}
-			setLoading(false)
+			setLoading(false);
 		}
 	};
-
 
 	const handleShowMessage = () => {
 		setToastMessage({
 			bool: true,
-			message: 'Upcoming feature! sit back',
-			status: "warning"
-		})
-	}
+			message: "Upcoming feature! sit back",
+			status: "warning",
+		});
+	};
 
 	return (
 		<>
