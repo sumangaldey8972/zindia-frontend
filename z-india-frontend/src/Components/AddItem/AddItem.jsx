@@ -59,6 +59,7 @@ const PropertySchema = Yup.object().shape({
 		Yup.object().shape({
 			icon: Yup.string().required("Icon is required"),
 			label: Yup.string().required("Label is required"),
+			distance: Yup.number().required("distance is required")
 		})
 	),
 	full_address: Yup.string().required("Full address is required"),
@@ -736,7 +737,7 @@ const AddItem = () => {
 														values.places_nearby.length > 0 ? (
 														values.places_nearby.map((place, index) => (
 															<Grid container spacing={2} key={index}>
-																<Grid item xs={5}>
+																<Grid item xs={4}>
 																	{/* Icon Dropdown */}
 
 																	<FormControl
@@ -751,7 +752,7 @@ const AddItem = () => {
 																		<Select
 																			placeholder="Select a place"
 																			required
-																			sx={{ minWidth: 200 }}
+																			sx={{ minWidth: 100 }}
 																			label="Icon"
 																			value={place.icon || ""}
 																			onChange={(e, newValue) => {
@@ -817,7 +818,7 @@ const AddItem = () => {
 																		</FormHelperText>
 																	</FormControl> */}
 																</Grid>
-																<Grid item xs={5}>
+																<Grid item xs={3}>
 																	<Field
 																		name={`places_nearby[${index}].label`}
 																		as={Input}
@@ -841,8 +842,32 @@ const AddItem = () => {
 																	</FormHelperText>
 																</Grid>
 
+																<Grid item xs={3}>
+																	<Field
+																		name={`places_nearby[${index}].distance`}
+																		as={Input}
+																		label="Distance (in Km)"
+																		placeholder="Enter distance"
+																		fullWidth
+																		error={
+																			touched.places_nearby?.[index]?.distance &&
+																			Boolean(
+																				errors.places_nearby?.[index]?.distance
+																			)
+																		}
+																		helperText={
+																			touched.places_nearby?.[index]?.distance &&
+																			errors.places_nearby?.[index]?.distance
+																		}
+																	/>
+																	<FormHelperText style={{ color: "red" }}>
+																		{touched.places_nearby?.[index]?.distance &&
+																			errors.places_nearby?.[index]?.distance}
+																	</FormHelperText>
+																</Grid>
+
 																{/* Button to remove the place */}
-																<Grid item xs={2}>
+																<Grid item xs={1}>
 																	<Button
 																		color="danger"
 																		onClick={() => arrayHelpers.remove(index)}

@@ -82,7 +82,7 @@ const AboutMidSection = () => {
                     color: "#44454c",
                   }}
                 >
-                  At Z-INDIA-REALTY, we believe in building homes that <br />{" "}
+                  At Z INDIA REALTY, we believe in building homes that <br />{" "}
                   not only shelter but also inspire lives for generations
                 </Typography>
 
@@ -93,7 +93,7 @@ const AboutMidSection = () => {
                     marginTop: ".6rem",
                   }}
                 >
-                  M/S Bidhan Saha, CEO
+                  Mr Bidhan Saha, CEO
                 </Typography>
               </Box>
             </Box>

@@ -90,7 +90,7 @@ export default function NavbarV2() {
 						fontSize: "clamp(1.875rem, 1.3636rem + 2.1818vw, 2rem)",
 					}}
 				>
-					Z-INDIA REALTY
+					"Z" INDIA REALTY
 				</Typography>
 			</Box>
 

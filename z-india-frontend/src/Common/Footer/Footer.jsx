@@ -62,7 +62,7 @@ const Footer = () => {
 								sx={{ color: "white" }}
 								startDecorator={<EmailIcon />}
 							>
-								manokafabrics@gmail.com
+								zindiarealty@gmail.com
 							</Typography>
 
 							<Typography

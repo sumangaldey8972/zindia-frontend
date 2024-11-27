@@ -528,7 +528,7 @@ const ProjectDetails = () => {
 											color="neutral"
 											fontWeight="600"
 										>
-											{place.label}
+											{place.label} - {place.distance}km
 										</Typography>
 									</Box>
 								))}
