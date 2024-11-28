@@ -2,8 +2,16 @@ import React from 'react'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import { Box, Breadcrumbs, Link, Typography } from '@mui/joy';
+import { useNavigate } from "react-router-dom"
 
 const BreadCrumbs = () => {
+
+    const navigate = useNavigate()
+
+    const handleNavigate = (route) => {
+        navigate(route)
+    }
+
     return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Breadcrumbs
@@ -15,7 +23,7 @@ const BreadCrumbs = () => {
                 <Link
                     underline="none"
                     color="neutral"
-                    href="#some-link"
+                    onClick={() => handleNavigate('/')}
                     aria-label="Home"
                 >
                     <HomeRoundedIcon />
@@ -23,7 +31,7 @@ const BreadCrumbs = () => {
                 <Link
                     underline="hover"
                     color="neutral"
-                    href="#some-link"
+                    onClick={() => handleNavigate('/')}
                     sx={{ fontSize: 12, fontWeight: 500 }}
                 >
                     Home
